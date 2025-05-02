@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2025-05-01",
+    "storeName": "ДНС",
+    "category": "Техника",
+    "description": "Скидка 20% на все товары",
+    "imageName": "dns"
+  },
+  {
+    "date": "2025-05-02",
+    "storeName": "samokat",
+    "category": "Еда",
+    "description": "Бесплатная кола",
+    "imageName": "samokat"
+  },
+  {
+    "date": "2025-05-03",
+    "storeName": "yandex",
+    "category": "Музыка",
+    "description": "Яндекс плюс на 10 дней",
+    "imageName": "yandex"
+  }
+]
