@@ -48,9 +48,12 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.navigation.runtime.android)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.navigation:navigation-compose:2.9.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
 import java.time.LocalDate
 
