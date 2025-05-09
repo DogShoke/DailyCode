@@ -24,12 +24,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.dailycode.bottom_navigation.MainScreen
-import com.example.dailycode.data.Coupon
-import com.google.gson.Gson
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
-import java.time.LocalDate
+
 
 class MainActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

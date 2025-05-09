@@ -42,18 +42,26 @@ android {
 }
 
 dependencies {
-
+    val room_version = "2.6.1"
     implementation ("com.google.code.gson:gson:2.10.1")
 
 
-    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-runtime:$room_version")
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.androidx.navigation.runtime.android)
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.foundation.layout.android)
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.navigation:navigation-compose:2.9.0")
+
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
+
+
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

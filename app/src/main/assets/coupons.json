@@ -1,5 +1,5 @@
 [
-  {
+{
     "date": "2025-05-01",
     "storeName": "ДНС",
     "category": "Техника",
@@ -19,5 +19,201 @@
     "category": "Музыка",
     "description": "Яндекс плюс на 10 дней",
     "imageName": "yandex"
+  },
+  {
+    "date": "2025-05-04",
+    "storeName": "OZON",
+    "category": "Книги",
+    "description": "Скидка 30% на бумажные книги",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-05",
+    "storeName": "Wildberries",
+    "category": "Одежда",
+    "description": "Скидка 25% на летнюю коллекцию",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-06",
+    "storeName": "Перекрёсток",
+    "category": "Продукты",
+    "description": "Скидка 10% на все свежие фрукты",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-07",
+    "storeName": "AliExpress",
+    "category": "Гаджеты",
+    "description": "Кэшбэк 15% на заказы от 2000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-08",
+    "storeName": "М.Видео",
+    "category": "Электроника",
+    "description": "Промокод на 500₽ при покупке от 5000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-09",
+    "storeName": "Delivery Club",
+    "category": "Еда",
+    "description": "Бесплатная доставка на первый заказ",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-10",
+    "storeName": "H&M",
+    "category": "Одежда",
+    "description": "Скидка 20% на мужскую коллекцию",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-11",
+    "storeName": "IKEA",
+    "category": "Дом",
+    "description": "Подарок при покупке от 3000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-12",
+    "storeName": "Пятёрочка",
+    "category": "Продукты",
+    "description": "2 по цене 1 на молочные продукты",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-13",
+    "storeName": "Avito",
+    "category": "Онлайн",
+    "description": "Скидка 100₽ на продвижение объявления",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-14",
+    "storeName": "Читай-город",
+    "category": "Книги",
+    "description": "Купон на 200₽ при покупке от 1000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-15",
+    "storeName": "Lamoda",
+    "category": "Обувь",
+    "description": "Скидка 15% на весь ассортимент",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-16",
+    "storeName": "Spotify",
+    "category": "Музыка",
+    "description": "Премиум на 1 месяц бесплатно",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-17",
+    "storeName": "Азбука Вкуса",
+    "category": "Продукты",
+    "description": "Промокод на 300₽ при заказе от 2000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-18",
+    "storeName": "DNS",
+    "category": "Техника",
+    "description": "Скидка 10% на аксессуары",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-19",
+    "storeName": "Reebok",
+    "category": "Спорт",
+    "description": "Скидка 20% на все кроссовки",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-20",
+    "storeName": "Магнит",
+    "category": "Продукты",
+    "description": "Промокод на скидку 5% в приложении",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-21",
+    "storeName": "ЛитРес",
+    "category": "Книги",
+    "description": "1 электронная книга бесплатно",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-22",
+    "storeName": "Burger King",
+    "category": "Еда",
+    "description": "2 по цене 1 на бургеры",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-23",
+    "storeName": "Nike",
+    "category": "Одежда",
+    "description": "Скидка 25% на летнюю коллекцию",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-24",
+    "storeName": "Spotify",
+    "category": "Музыка",
+    "description": "Купон на 14 дней Premium",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-25",
+    "storeName": "Fix Price",
+    "category": "Разное",
+    "description": "Подарок при покупке от 500₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-26",
+    "storeName": "Яндекс Лавка",
+    "category": "Продукты",
+    "description": "Бесплатная доставка при заказе от 1000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-27",
+    "storeName": "Decathlon",
+    "category": "Спорт",
+    "description": "Скидка 15% на товары для туризма",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-28",
+    "storeName": "iHerb",
+    "category": "Здоровье",
+    "description": "Купон на 10% при первом заказе",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-29",
+    "storeName": "Ozon",
+    "category": "Электроника",
+    "description": "Скидка 20% на аксессуары для телефона",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-30",
+    "storeName": "Hoff",
+    "category": "Дом",
+    "description": "Промокод на 1000₽ при заказе от 5000₽",
+    "imageName": "test"
+  },
+  {
+    "date": "2025-05-31",
+    "storeName": "Aviasales",
+    "category": "Путешествия",
+    "description": "Скидка 5% на авиабилеты",
+    "imageName": "test"
   }
 ]

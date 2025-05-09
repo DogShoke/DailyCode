@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.dailycode.CalendarRow
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
@@ -25,11 +26,15 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val coroutineScope = rememberCoroutineScope()
-
     val context = LocalContext.current
+
     var coupon by remember { mutableStateOf<Coupon?>(null) }
+    val today = remember { LocalDate.now() }
+    var selectedDate by remember { mutableStateOf(today) }
+    var isInitialized by remember { mutableStateOf(false) }
+
     // Загрузка JSON и сохранение в базу
     LaunchedEffect(Unit) {
         val db = AppDatabase.getDatabase(context)
@@ -43,44 +48,66 @@ fun HomeScreen() {
                 couponDao.insertCoupon(item)
             }
         }
+        isInitialized = true
     }
 
-    val today = remember { LocalDate.now() }
-    var selectedDate by remember { mutableStateOf(today) }
 
     // Получение купона по дате
-    LaunchedEffect(selectedDate) {
-        val db = AppDatabase.getDatabase(context)
-        val couponDao = db.couponDao()
-        coupon = couponDao.getCouponByDate(selectedDate.toString())
-    }
-
-    Column {
-        CalendarRow(
-            selectedDate = selectedDate,
-            onDateSelected = { selectedDate = it }
-        )
-
-        coupon?.let {
-            CouponItem(it)
-        } ?: Text("Нет купонов для выбранной даты")
-
-
-        Button(onClick = {
-            coupon?.let {
-                if (!it.isClaimed) {
-                    it.isClaimed = true
-                    it.activationCode = generateActivationCode()
-                    coroutineScope.launch {
-                        AppDatabase.getDatabase(context).couponDao().updateCoupon(it)
-                    }
-                }
-            }
-        }) {
-            Text("ЗАБРАТЬ")
+    LaunchedEffect(selectedDate, isInitialized) {
+        if (isInitialized) {
+            val db = AppDatabase.getDatabase(context)
+            val couponDao = db.couponDao()
+            coupon = couponDao.getCouponByDate(selectedDate.toString())
         }
     }
 
+    Column(modifier = Modifier.padding(16.dp)) {
+        CalendarRow(
+            selectedDate = selectedDate,
+            onDateSelected = { selectedDate = it },
+            today = today
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        when {
+            selectedDate.isAfter(today) -> {
+                Text("Купон пока недоступен. Дождитесь нужной даты.")
+            }
+
+            coupon != null -> {
+                CouponItem(coupon!!)
+            }
+
+            else -> {
+                Text("Нет купонов для выбранной даты")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        val isButtonEnabled = selectedDate == today && coupon != null && !coupon!!.isClaimed
+
+        Button(
+            onClick = {
+                if (isButtonEnabled) {
+                    coupon?.let {
+                        it.isClaimed = true
+                        it.activationCode = generateActivationCode()
+                        coroutineScope.launch {
+                            AppDatabase.getDatabase(context).couponDao().updateCoupon(it)
+                        }
+                    }
+                }
+            },
+            enabled = isButtonEnabled
+        ) {
+            Text("ЗАБРАТЬ")
+        }
+        Button(onClick = { navController.navigate("cards") }) {
+            Text("Мои карты")
+        }
+    }
 
 }
 
@@ -116,3 +143,5 @@ fun generateActivationCode(): String {
         .chunked(4)
         .joinToString(" ") { it.joinToString("") }
 }
+
+

@@ -24,19 +24,15 @@ import java.time.LocalDate
 @Composable
 fun CalendarRow(
     selectedDate: LocalDate,
-    onDateSelected: (LocalDate) -> Unit
+    onDateSelected: (LocalDate) -> Unit,
+    today: LocalDate
 ) {
-    val today = remember { LocalDate.now() }
-
-    // 38 дней: 7 до, 30 после
     val dates = remember {
-        List(38) { i -> Day(
-            today.minusDays(7).plusDays(i.toLong())
+        List(14) { i -> Day(today.minusDays(7).plusDays(i.toLong())
         ) }
     }
 
     val listState = rememberLazyListState()
-
     val todayIndex = dates.indexOfFirst { it.date == today }
 
     LaunchedEffect(Unit) {
@@ -45,7 +41,9 @@ fun CalendarRow(
 
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        state = listState
+        state = listState,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(dates) { day ->
             DayItem(
@@ -66,21 +64,34 @@ fun DayItem(day: Day, isToday: Boolean, isSelected: Boolean, onClick: () -> Unit
         else -> Color.LightGray
     }
     val borderColor = if (isToday) Color.Blue else Color.Transparent
-
-    Box(
-        contentAlignment = Alignment.Center,
+    val dayOfWeek = day.date.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale("ru"))
+        .uppercase()
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(4.dp)
-            .size(50.dp)
-            .clip(CircleShape)
-            .background(backgroundColor)
-            .border(2.dp, borderColor, CircleShape)
+            .size(60.dp)
             .clickable { onClick() }
-    ) {
+    ){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(backgroundColor)
+                .border(2.dp, borderColor, CircleShape)
+        ) {
+            Text(
+                text = day.date.dayOfMonth.toString(),
+                fontSize = 16.sp,
+                color = Color.White
+            )
+        }
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = day.date.dayOfMonth.toString(),
-            fontSize = 16.sp,
-            color = Color.White
+            text = dayOfWeek,
+            fontSize = 12.sp,
+            color = Color.DarkGray
         )
     }
 }
