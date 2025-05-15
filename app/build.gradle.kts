@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("kapt") version "1.9.25"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -59,8 +60,9 @@ dependencies {
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
 
-
-
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
 
 
     implementation(libs.androidx.core.ktx)

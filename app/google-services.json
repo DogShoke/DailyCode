@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781228972902",
+    "project_id": "dailycode-3b38f",
+    "storage_bucket": "dailycode-3b38f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781228972902:android:f6ea5678542332d04dc6a7",
+        "android_client_info": {
+          "package_name": "com.example.dailycode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyZBa0mSllkyC_e7IGab4KxD43dE9AabI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

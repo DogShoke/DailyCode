@@ -1,0 +1,272 @@
+[
+  {
+    "storeName": "ДНС",
+    "category": "Техника",
+    "description": "Скидка 20% на все товары",
+    "imageUrl": "dns",
+    "id": "dns_tech_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "samokat",
+    "category": "Еда",
+    "description": "Бесплатная кола",
+    "imageUrl": "samokat",
+    "id": "samokat_food_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "yandex",
+    "category": "Музыка",
+    "description": "Яндекс плюс на 10 дней",
+    "imageUrl": "yandex",
+    "id": "yandex_music_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "OZON",
+    "category": "Книги",
+    "description": "Скидка 30% на бумажные книги",
+    "imageUrl": "test",
+    "id": "ozon_books_30",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Wildberries",
+    "category": "Одежда",
+    "description": "Скидка 25% на летнюю коллекцию",
+    "imageUrl": "test",
+    "id": "wildberries_clothes_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Перекрёсток",
+    "category": "Продукты",
+    "description": "Скидка 10% на все свежие фрукты",
+    "imageUrl": "test",
+    "id": "perekrestok_groceries_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "AliExpress",
+    "category": "Гаджеты",
+    "description": "Кэшбэк 15% на заказы от 2000₽",
+    "imageUrl": "test",
+    "id": "aliexpress_gadgets_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "М.Видео",
+    "category": "Электроника",
+    "description": "Промокод на 500₽ при покупке от 5000₽",
+    "imageUrl": "test",
+    "id": "mvideo_electronics_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Delivery Club",
+    "category": "Еда",
+    "description": "Бесплатная доставка на первый заказ",
+    "imageUrl": "test",
+    "id": "deliveryclub_food_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "H&M",
+    "category": "Одежда",
+    "description": "Скидка 20% на мужскую коллекцию",
+    "imageUrl": "test",
+    "id": "hm_clothes_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "IKEA",
+    "category": "Дом",
+    "description": "Подарок при покупке от 3000₽",
+    "imageUrl": "test",
+    "id": "ikea_home_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Пятёрочка",
+    "category": "Продукты",
+    "description": "2 по цене 1 на молочные продукты",
+    "imageUrl": "test",
+    "id": "pyaterochka_groceries_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Avito",
+    "category": "Онлайн",
+    "description": "Скидка 100₽ на продвижение объявления",
+    "imageUrl": "test",
+    "id": "avito_online_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Читай-город",
+    "category": "Книги",
+    "description": "Купон на 200₽ при покупке от 1000₽",
+    "imageUrl": "test",
+    "id": "chitay_books_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Lamoda",
+    "category": "Обувь",
+    "description": "Скидка 15% на весь ассортимент",
+    "imageUrl": "test",
+    "id": "lamoda_shoes_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Spotify",
+    "category": "Музыка",
+    "description": "Премиум на 1 месяц бесплатно",
+    "imageUrl": "test",
+    "id": "spotify_music_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Азбука Вкуса",
+    "category": "Продукты",
+    "description": "Промокод на 300₽ при заказе от 2000₽",
+    "imageUrl": "test",
+    "id": "azbuka_groceries_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "DNS",
+    "category": "Техника",
+    "description": "Скидка 10% на аксессуары",
+    "imageUrl": "test",
+    "id": "dns_accessories_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Reebok",
+    "category": "Спорт",
+    "description": "Скидка 20% на все кроссовки",
+    "imageUrl": "test",
+    "id": "reebok_sport_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Магнит",
+    "category": "Продукты",
+    "description": "Промокод на скидку 5% в приложении",
+    "imageUrl": "test",
+    "id": "magnit_groceries_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Nike",
+    "category": "Спорт",
+    "description": "Скидка 25% на новую коллекцию",
+    "imageUrl": "test",
+    "id": "nike_sport_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "ЛитРес",
+    "category": "Книги",
+    "description": "Электронная книга в подарок",
+    "imageUrl": "test",
+    "id": "litres_books_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Adidas",
+    "category": "Одежда",
+    "description": "Промокод на 1000₽ при покупке от 5000₽",
+    "imageUrl": "test",
+    "id": "adidas_clothes_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Мегафон",
+    "category": "Связь",
+    "description": "10 ГБ интернета бесплатно",
+    "imageUrl": "test",
+    "id": "megafon_mobile_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Бургер Кинг",
+    "category": "Еда",
+    "description": "2 бургера по цене одного",
+    "imageUrl": "test",
+    "id": "burgerking_food_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Тануки",
+    "category": "Еда",
+    "description": "Сет роллов в подарок при заказе от 1500₽",
+    "imageUrl": "test",
+    "id": "tanuki_food_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Zara",
+    "category": "Одежда",
+    "description": "Сезонные скидки до 50%",
+    "imageUrl": "test",
+    "id": "zara_clothes_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Карусель",
+    "category": "Продукты",
+    "description": "3 по цене 2 на напитки",
+    "imageUrl": "test",
+    "id": "karusel_groceries_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Ламода",
+    "category": "Аксессуары",
+    "description": "Скидка 20% на сумки и рюкзаки",
+    "imageUrl": "test",
+    "id": "lamoda_accessories_1",
+    "isActive": true,
+    "weight": 1
+  },
+  {
+    "storeName": "Яндекс.Лавка",
+    "category": "Еда",
+    "description": "Промокод на 250₽ для новых пользователей",
+    "imageUrl": "test",
+    "id": "lavka_food_1",
+    "isActive": true,
+    "weight": 1
+  }
+]

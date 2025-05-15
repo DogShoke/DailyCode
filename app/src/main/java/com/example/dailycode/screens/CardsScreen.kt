@@ -46,7 +46,6 @@ fun CardsScreen(navController: NavController) {
 
     var cards by remember { mutableStateOf(emptyList<Card>()) }
 
-    // Загружаем данные при запуске
     LaunchedEffect(Unit) {
         val result = withContext(Dispatchers.IO) {
             cardDao.getAllCards()
