@@ -22,44 +22,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.dailycode.ClaimedCoupon
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
 import kotlinx.coroutines.launch
 
 @Composable
-fun MyCouponsScreen(){
+fun MyCouponsScreen() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    var claimedCoupons by remember { mutableStateOf<List<Coupon>>(emptyList()) }
+    var claimedCoupons by remember { mutableStateOf<List<ClaimedCoupon>>(emptyList()) }
 
-    // Загрузка забранных купонов
     LaunchedEffect(Unit) {
         val db = AppDatabase.getDatabase(context)
-        claimedCoupons = db.couponDao().getClaimedCoupons()
+        claimedCoupons = db.claimedCouponDao().getAllClaimedCoupons()
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Забранные купоны")
 
-        claimedCoupons.forEach { coupon ->
+        claimedCoupons.forEach { claimedCoupon ->
+            val coupon = claimedCoupon
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 shape = RoundedCornerShape(12.dp)
-
             ) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Магазин: ${coupon.storeName}")
                     Text("Категория: ${coupon.category}")
                     Text("Описание: ${coupon.description}")
-                    Text("Код: ${coupon.activationCode ?: "N/A"}")
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(onClick = {
                         coroutineScope.launch {
                             val db = AppDatabase.getDatabase(context)
-                            db.couponDao().deleteCoupon(coupon)
-                            claimedCoupons = db.couponDao().getClaimedCoupons()
+                            db.claimedCouponDao().deleteClaimedCoupon(claimedCoupon)
+                            claimedCoupons = db.claimedCouponDao().getAllClaimedCoupons()
                         }
                     }) {
                         Text("Удалить")
@@ -69,7 +69,7 @@ fun MyCouponsScreen(){
         }
 
         if (claimedCoupons.isEmpty()) {
-            Text("Нет забранных купонов")
+            Text("Нет забранных купонов", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }
     }
 }

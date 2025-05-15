@@ -3,11 +3,13 @@ package com.example.dailycode.bottom_navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.dailycode.screens.CardsScreen
+import com.example.dailycode.screens.CategorySelectionScreen
 import com.example.dailycode.screens.HomeScreen
 import com.example.dailycode.screens.MyCouponsScreen
 import com.example.dailycode.screens.ScanCardScreen
@@ -33,5 +35,14 @@ fun NavGraph(
         composable("cards") {
             CardsScreen(navHostController)
         }
+        composable("select_categories") {
+            CategorySelectionScreen(
+                navController = navHostController,
+                onCategoriesSelected = { selected ->
+                    // Сохрани выбранные категории в ViewModel или SharedPreferences
+                }
+            )
+        }
+
     }
 }

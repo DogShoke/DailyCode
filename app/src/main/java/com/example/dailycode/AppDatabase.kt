@@ -1,19 +1,22 @@
 package com.example.dailycode.data
 
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.dailycode.Card
 import com.example.dailycode.CardsDao
-import com.example.dailycode.data.Coupon
-import com.example.dailycode.data.CouponDao
+import com.example.dailycode.ClaimedCoupon
+import com.example.dailycode.ClaimedCouponDao
 
-@Database(entities = [Coupon::class, Card::class], version = 9)
+
+@Database(entities = [Card::class, ClaimedCoupon::class], version = 11)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun couponDao(): CouponDao
+    abstract fun claimedCouponDao(): ClaimedCouponDao
     abstract fun cardDao(): CardsDao
-    companion object {
+
+    /*companion object {
         fun getDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(
                 context.applicationContext,
@@ -21,6 +24,24 @@ abstract class AppDatabase : RoomDatabase() {
                 "coupon_database"
             ).fallbackToDestructiveMigration()
                 .build()
+        }
+    }*/
+    companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "claimed_coupons_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = instance
+                instance
+            }
         }
     }
 }
