@@ -25,14 +25,13 @@ class FirebaseCouponRepository {
 
     suspend fun getRandomCouponByCategories(
         categories: List<String>,
-        claimedCoupons: List<Coupon>
+        claimedCouponIds: List<String>
     ): Coupon? {
         val allCoupons = getCouponsByCategories(categories)
-            .filter { coupon -> claimedCoupons.none { it.id == coupon.id } }
+            .filter { coupon -> coupon.id !in claimedCouponIds }
 
         if (allCoupons.isEmpty()) return null
 
-        // Учитываем вес (weight)
         val totalWeight = allCoupons.sumOf { it.weight }
         val randomValue = Random.nextDouble() * totalWeight
 
@@ -44,14 +43,16 @@ class FirebaseCouponRepository {
             }
         }
 
-        // На всякий случай вернуть последний
         return allCoupons.last()
     }
+
+
     suspend fun claimCouponLocally(context: Context, coupon: Coupon) {
         val db = AppDatabase.getDatabase(context)
         val claimedCouponDao = db.claimedCouponDao()
 
         val claimedCoupon = ClaimedCoupon(
+            id = coupon.id,
             storeName = coupon.storeName,
             category = coupon.category,
             description = coupon.description,

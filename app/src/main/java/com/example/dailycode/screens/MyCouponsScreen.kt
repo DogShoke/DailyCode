@@ -35,8 +35,11 @@ fun MyCouponsScreen() {
 
     LaunchedEffect(Unit) {
         val db = AppDatabase.getDatabase(context)
-        claimedCoupons = db.claimedCouponDao().getAllClaimedCoupons()
+        db.claimedCouponDao().getAllClaimedCoupons().collect { coupons ->
+            claimedCoupons = coupons
+        }
     }
+
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Забранные купоны")
@@ -59,11 +62,14 @@ fun MyCouponsScreen() {
                         coroutineScope.launch {
                             val db = AppDatabase.getDatabase(context)
                             db.claimedCouponDao().deleteClaimedCoupon(claimedCoupon)
-                            claimedCoupons = db.claimedCouponDao().getAllClaimedCoupons()
+                            db.claimedCouponDao().getAllClaimedCoupons().collect { updatedList ->
+                                claimedCoupons = updatedList
+                            }
                         }
                     }) {
                         Text("Удалить")
                     }
+
                 }
             }
         }

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "claimed_coupons")
 data class ClaimedCoupon(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey()
+    val id: String,
     val storeName: String,
     val category: String,
     val description: String,

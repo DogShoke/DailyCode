@@ -18,6 +18,8 @@ import com.example.dailycode.CalendarRow
 import com.example.dailycode.FirebaseCouponRepository
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -40,15 +42,22 @@ fun HomeScreen(navController: NavController) {
     var selectedCategories by remember { mutableStateOf(listOf("Продукты", "Одежда", "Электроника")) }
     var coupon by remember { mutableStateOf<Coupon?>(null) }
 
-    val claimedCoupons by claimedCouponDao.getAllClaimedCoupons().collectAsState(initial = emptyList())
+
 
     LaunchedEffect(selectedCategories) {
-        coupon = couponRepository.getRandomCouponByCategories(selectedCategories, claimedCoupons)
-        //надо еще ему сказать, что нужно создавать не каждый раз рандомный а к каждой дате привязывать его и запоминать
+        val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
+        val claimedCouponIds = claimedCoupons.map { it.id }
+
+        coupon = couponRepository.getRandomCouponByCategories(
+            selectedCategories,
+            claimedCouponIds
+        )
     }
 
 
 
+
+//надо еще ему сказать, что нужно создавать не каждый раз рандомный а к каждой дате привязывать его и запоминать
     Column(modifier = Modifier.padding(16.dp)) {
         CalendarRow(
             selectedDate = selectedDate,
@@ -81,11 +90,18 @@ fun HomeScreen(navController: NavController) {
                 coupon?.let {
                     coroutineScope.launch {
                         couponRepository.claimCouponLocally(context, it)
+
+                        val claimedCouponIds = claimedCouponDao
+                            .getAllClaimedCoupons()
+                            .first()
+                            .map { claimed -> claimed.id }
+
                         coupon = couponRepository.getRandomCouponByCategories(
                             selectedCategories,
-                            claimedCouponDao.getAllClaimedCoupons()
+                            claimedCouponIds
                         )
                     }
+
                 }
             },
             enabled = isButtonEnabled

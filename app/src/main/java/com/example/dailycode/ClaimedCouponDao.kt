@@ -14,7 +14,7 @@ interface ClaimedCouponDao {
     suspend fun insert(claimedCoupon: ClaimedCoupon)
 
     @Delete
-    suspend fun delete(claimedCoupon: ClaimedCoupon)
+    suspend fun deleteClaimedCoupon(coupon: ClaimedCoupon)
 
     @Query("SELECT * FROM claimed_coupons")
     fun getAllClaimedCoupons(): Flow<List<ClaimedCoupon>>

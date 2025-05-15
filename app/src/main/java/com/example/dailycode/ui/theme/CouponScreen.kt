@@ -61,7 +61,7 @@ fun CouponScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            val imageResId = getDrawableIdByName(context, coupon.imageName)
+           /* val imageResId = getDrawableIdByName(context, coupon.imageName)
             if (imageResId != 0) {
                 Image(
                     painter = painterResource(id = imageResId),
@@ -70,7 +70,7 @@ fun CouponScreen(
                         .fillMaxWidth()
                         .height(180.dp)
                 )
-            }
+            }*/
         } else {
             Text(
                 text = "На эту дату купон не найден.",
