@@ -54,10 +54,6 @@ fun HomeScreen(navController: NavController) {
         )
     }
 
-
-
-
-//надо еще ему сказать, что нужно создавать не каждый раз рандомный а к каждой дате привязывать его и запоминать
     Column(modifier = Modifier.padding(16.dp)) {
         CalendarRow(
             selectedDate = selectedDate,

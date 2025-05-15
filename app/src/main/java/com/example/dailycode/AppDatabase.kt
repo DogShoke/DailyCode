@@ -15,17 +15,6 @@ import com.example.dailycode.ClaimedCouponDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun claimedCouponDao(): ClaimedCouponDao
     abstract fun cardDao(): CardsDao
-
-    /*companion object {
-        fun getDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "coupon_database"
-            ).fallbackToDestructiveMigration()
-                .build()
-        }
-    }*/
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

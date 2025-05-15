@@ -1,5 +1,6 @@
 package com.example.dailycode.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,8 +9,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.dailycode.CategoryDataStore
+import kotlinx.coroutines.launch
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,6 +23,9 @@ fun CategorySelectionScreen(
     navController: NavController,
     onCategoriesSelected: (List<String>) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     val availableCategories = listOf(
         "Еда",
         "Одежда",
@@ -32,6 +41,18 @@ fun CategorySelectionScreen(
 
     val selectedCategories = remember { mutableStateListOf<String>() }
 
+    LaunchedEffect(Unit) {
+        val savedCategories = CategoryDataStore.loadCategories(context)
+        selectedCategories.clear()
+        selectedCategories.addAll(savedCategories)
+    }
+
+    BackHandler {
+        coroutineScope.launch {
+            CategoryDataStore.saveCategories(context, selectedCategories)
+            navController.popBackStack()
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,17 +60,7 @@ fun CategorySelectionScreen(
             )
         },
         bottomBar = {
-            Button(
-                onClick = {
-                    onCategoriesSelected(selectedCategories.toList())
-                    navController.popBackStack() // Возврат назад
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text("Сохранить выбор")
-            }
+
         }
     ) { padding ->
         LazyColumn(modifier = Modifier
@@ -79,6 +90,24 @@ fun CategorySelectionScreen(
                     Text(category)
                 }
             }
+            /*item {
+                val coroutineScope = rememberCoroutineScope()
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            // Сохраняем выбранные категории в DataStore
+                            CategoryDataStore.saveCategories(context, selectedCategories)
+                            // Передаем выбранные категории назад и закрываем экран
+                            onCategoriesSelected(selectedCategories.toList())
+                            navController.popBackStack()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Сохранить выбор")
+                }
+            }*/
+
         }
     }
 }
