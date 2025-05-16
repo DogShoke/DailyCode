@@ -39,7 +39,6 @@ fun NavGraph(
             CategorySelectionScreen(
                 navController = navHostController,
                 onCategoriesSelected = { selected ->
-                    // Сохрани выбранные категории в ViewModel или SharedPreferences
                 }
             )
         }

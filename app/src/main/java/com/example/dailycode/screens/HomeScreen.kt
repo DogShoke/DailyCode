@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.dailycode.CalendarRow
+import com.example.dailycode.CategoryDataStore
+import com.example.dailycode.CouponHistoryDataStore
 import com.example.dailycode.FirebaseCouponRepository
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
@@ -39,12 +41,31 @@ fun HomeScreen(navController: NavController) {
     val today = remember { LocalDate.now() }
     var selectedDate by remember { mutableStateOf(today) }
 
-    var selectedCategories by remember { mutableStateOf(listOf("Продукты", "Одежда", "Электроника")) }
+    var selectedCategories by remember { mutableStateOf(listOf("null")) }
+
+    LaunchedEffect(Unit) {
+        val savedCategories = CategoryDataStore.loadCategories(context)
+        selectedCategories = if (savedCategories.isNotEmpty()) savedCategories else listOf("Продукты", "Одежда", "Электроника")
+    }
+
+
+    /*LaunchedEffect(selectedDate, selectedCategories) {
+        val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
+        val claimedCouponIds = claimedCoupons.map { it.id }
+
+        val dateKey = selectedDate.toString() // например, "2025-05-16"
+
+        coupon = couponRepository.getOrGenerateCouponForDate(
+            context,
+            dateKey,
+            selectedCategories,
+            claimedCouponIds
+        )
+    }*/
+
+
     var coupon by remember { mutableStateOf<Coupon?>(null) }
-
-
-
-    LaunchedEffect(selectedCategories) {
+   /* LaunchedEffect(selectedCategories) {
         val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
         val claimedCouponIds = claimedCoupons.map { it.id }
 
@@ -52,6 +73,39 @@ fun HomeScreen(navController: NavController) {
             selectedCategories,
             claimedCouponIds
         )
+    }*/
+
+    LaunchedEffect(Unit) {
+        val todayStr = today.toString()
+        val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, todayStr)
+        if (savedCoupon != null) {
+            coupon = savedCoupon
+        } else {
+            val claimedCouponIds = claimedCouponDao.getAllClaimedCoupons().first().map { it.id }
+            val newCoupon = couponRepository.getRandomCouponByCategories(selectedCategories, claimedCouponIds)
+            if (newCoupon != null) {
+                CouponHistoryDataStore.saveCouponForDate(context, todayStr, newCoupon)
+                coupon = newCoupon
+            }
+        }
+    }
+
+    LaunchedEffect(selectedDate) {
+        val dateStr = selectedDate.toString()
+        val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, dateStr)
+        coupon = savedCoupon
+    }
+
+    var isClaimed by remember { mutableStateOf(false) }
+
+    // Проверяем, забран ли текущий купон
+    LaunchedEffect(coupon) {
+        if (coupon != null) {
+            val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
+            isClaimed = claimedCoupons.any { it.id == coupon!!.id }
+        } else {
+            isClaimed = false
+        }
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -79,28 +133,35 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        val isButtonEnabled = selectedDate == today && coupon != null
+        //val isButtonEnabled = selectedDate == today && coupon != null
+        val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
 
         Button(
             onClick = {
                 coupon?.let {
                     coroutineScope.launch {
                         couponRepository.claimCouponLocally(context, it)
-
-                        val claimedCouponIds = claimedCouponDao
+                        if (coupon != null) {
+                            val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
+                            isClaimed = claimedCoupons.any { it.id == coupon!!.id }
+                        } else {
+                            isClaimed = false
+                        }
+                        /*val claimedCouponIds = claimedCouponDao
                             .getAllClaimedCoupons()
                             .first()
-                            .map { claimed -> claimed.id }
+                            .map { claimed -> claimed.id }*/
 
-                        coupon = couponRepository.getRandomCouponByCategories(
+                       /* coupon = couponRepository.getRandomCouponByCategories(
                             selectedCategories,
                             claimedCouponIds
-                        )
+                        )*/
                     }
 
                 }
             },
             enabled = isButtonEnabled
+
         ) {
             Text("ЗАБРАТЬ")
         }

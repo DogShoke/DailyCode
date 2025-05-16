@@ -64,4 +64,23 @@ class FirebaseCouponRepository {
 
         claimedCouponDao.insert(claimedCoupon)
     }
+
+    suspend fun getOrGenerateCouponForDate(
+        context: Context,
+        date: String,
+        selectedCategories: List<String>,
+        claimedCouponIds: List<String>
+    ): Coupon? {
+        // Проверим, есть ли купон на эту дату
+        val storedCoupon = CouponHistoryDataStore.getCouponForDate(context, date)
+        if (storedCoupon != null) return storedCoupon
+
+        // Сгенерируем новый, если его нет
+        val newCoupon = getRandomCouponByCategories(selectedCategories, claimedCouponIds)
+        if (newCoupon != null) {
+            CouponHistoryDataStore.saveCouponForDate(context, date, newCoupon)
+        }
+        return newCoupon
+    }
+
 }

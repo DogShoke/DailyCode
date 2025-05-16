@@ -76,6 +76,3 @@ fun CardsScreen(navController: NavController) {
         }
     }
 }
-
-
-

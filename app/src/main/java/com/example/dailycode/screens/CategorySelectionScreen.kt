@@ -90,7 +90,7 @@ fun CategorySelectionScreen(
                     Text(category)
                 }
             }
-            /*item {
+            item {
                 val coroutineScope = rememberCoroutineScope()
                 Button(
                     onClick = {
@@ -106,7 +106,7 @@ fun CategorySelectionScreen(
                 ) {
                     Text("Сохранить выбор")
                 }
-            }*/
+            }
 
         }
     }

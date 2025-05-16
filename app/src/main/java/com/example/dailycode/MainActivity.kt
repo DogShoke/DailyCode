@@ -22,8 +22,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.dailycode.bottom_navigation.MainScreen
+import com.example.dailycode.screens.CardsScreen
 
 
 class MainActivity : ComponentActivity() {
