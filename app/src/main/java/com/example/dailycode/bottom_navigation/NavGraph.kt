@@ -8,6 +8,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.dailycode.BarcodeScannerScreen
 import com.example.dailycode.screens.CardsScreen
 import com.example.dailycode.screens.CategorySelectionScreen
 import com.example.dailycode.screens.HomeScreen
@@ -34,6 +35,13 @@ fun NavGraph(
 
         composable("cards") {
             CardsScreen(navHostController)
+        }
+        composable("scan_card/{cardNumber}") { backStackEntry ->
+            val cardNumber = backStackEntry.arguments?.getString("cardNumber") ?: ""
+            ScanCardScreen(navHostController, scannedCardNumber = cardNumber)
+        }
+        composable("barcode_scanner") {
+            BarcodeScannerScreen(navHostController)
         }
         composable("select_categories") {
             CategorySelectionScreen(

@@ -1,6 +1,10 @@
 package com.example.dailycode.screens
 
+import android.Manifest
 import android.os.Build
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -70,6 +74,25 @@ fun ScanCardScreen(navController: NavController, scannedCardNumber: String) {
             Spacer(modifier = Modifier.height(12.dp))
             Text("Карта успешно сохранена!")
         }
+    }
+}
+
+
+@Composable
+fun RequestCameraPermission(onPermissionGranted: () -> Unit) {
+    val context = LocalContext.current
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            onPermissionGranted()
+        } else {
+            Toast.makeText(context, "Требуется разрешение на камеру", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        permissionLauncher.launch(Manifest.permission.CAMERA)
     }
 }
 

@@ -20,8 +20,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.dailycode.ClaimedCoupon
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
@@ -42,7 +45,9 @@ fun MyCouponsScreen() {
 
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text("Забранные купоны")
+        Text("Забранные купоны", fontWeight = FontWeight(700), modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            textAlign = TextAlign.Center, style = TextStyle(fontSize = 24.sp)
+        )
 
         claimedCoupons.forEach { claimedCoupon ->
             val coupon = claimedCoupon

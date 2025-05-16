@@ -10,11 +10,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.dailycode.CategoryDataStore
 import kotlinx.coroutines.launch
-
+import java.time.format.TextStyle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,8 +58,10 @@ fun CategorySelectionScreen(
     }
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Выбор категорий") }
+            CenterAlignedTopAppBar(
+                title = { Text("Выбор категорий",fontWeight = FontWeight(700), modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    textAlign = TextAlign.Center, style = androidx.compose.ui.text.TextStyle(fontSize = 24.sp))
+                }
             )
         },
         bottomBar = {
