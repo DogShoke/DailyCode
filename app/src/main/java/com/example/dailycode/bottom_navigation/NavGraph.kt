@@ -3,19 +3,16 @@ package com.example.dailycode.bottom_navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.dailycode.BarcodeScannerScreen
+import com.example.dailycode.screens.BarcodeScannerScreen
 import com.example.dailycode.screens.CardsScreen
 import com.example.dailycode.screens.CategorySelectionScreen
 import com.example.dailycode.screens.HomeScreen
 import com.example.dailycode.screens.MyCouponsScreen
 import com.example.dailycode.screens.ScanCardScreen
 import com.example.dailycode.screens.SettingsScreen
-import com.example.dailycode.ui.screens.CouponScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
