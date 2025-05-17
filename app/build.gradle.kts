@@ -74,7 +74,10 @@ dependencies {
     implementation("androidx.camera:camera-camera2:1.3.0")
     implementation("androidx.camera:camera-lifecycle:1.3.0")
     implementation("androidx.camera:camera-view:1.3.0")
-   
+
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.code.gson:gson:2.10.1")
+
 
 
     implementation(libs.androidx.core.ktx)

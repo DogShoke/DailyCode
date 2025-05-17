@@ -1,11 +1,11 @@
 package com.example.dailycode.data
 
 data class Coupon(
-    val id: String = "",
-    val storeName: String = "",
-    val category: String = "",
-    val description: String = "",
-    val imageUrl: String = "",
-    val isActive: Boolean = true,
-    val weight: Double = 0.5
+    var id: String = "",
+    var storeName: String = "",
+    var category: String = "",
+    var description: String = "",
+    var imageUrl: String = "",
+    var isActive: Boolean = true,
+    var weight: Double = 1.0
 )

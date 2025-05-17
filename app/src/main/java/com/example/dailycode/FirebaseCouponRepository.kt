@@ -15,7 +15,7 @@ class FirebaseCouponRepository {
     suspend fun getCouponsByCategories(categories: List<String>): List<Coupon> {
         val querySnapshot = couponsCollection
             .whereIn("category", categories)
-            .whereEqualTo("isActive", true)
+            .whereEqualTo("active", true)
             .get()
             .await()
 
@@ -64,8 +64,8 @@ class FirebaseCouponRepository {
 
         claimedCouponDao.insert(claimedCoupon)
     }
-
-    suspend fun getOrGenerateCouponForDate(
+}
+    /*suspend fun getOrGenerateCouponForDate(
         context: Context,
         date: String,
         selectedCategories: List<String>,
@@ -82,5 +82,5 @@ class FirebaseCouponRepository {
         }
         return newCoupon
     }
+*/
 
-}

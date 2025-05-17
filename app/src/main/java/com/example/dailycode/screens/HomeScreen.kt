@@ -1,6 +1,8 @@
 package com.example.dailycode.screens
 
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -29,7 +31,6 @@ import java.time.LocalDate
 @Composable
 fun HomeScreen(navController: NavController) {
 
-
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val db = remember { AppDatabase.getDatabase(context) }
@@ -37,45 +38,44 @@ fun HomeScreen(navController: NavController) {
 
     val couponRepository = remember { FirebaseCouponRepository() }
 
-
     val today = remember { LocalDate.now() }
     var selectedDate by remember { mutableStateOf(today) }
 
-    var selectedCategories by remember { mutableStateOf(listOf("null")) }
+    //var selectedCategories by remember { mutableStateOf(emptyList<String>()) }
+    var selectedCategories by remember { mutableStateOf(listOf( "Еда",
+        "Одежда",
+        "Техника",
+        "Красота",
+        "Дом и ремонт",
+        "Развлечения",
+        "Спорт",
+        "Транспорт",
+        "Книги",
+        "Путешествия"))}
+    var coupon by remember { mutableStateOf<Coupon?>(null) }
+    var categoriesLoaded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         val savedCategories = CategoryDataStore.loadCategories(context)
-        selectedCategories = if (savedCategories.isNotEmpty()) savedCategories else listOf("Продукты", "Одежда", "Электроника")
-    }
+        selectedCategories = if (savedCategories.isNotEmpty()) {
+            savedCategories
+        } else {
+            listOf(
+                "Еда",
+                "Одежда",
+                "Техника",
+                "Красота",
+                "Дом и ремонт",
+                "Развлечения",
+                "Спорт",
+                "Транспорт",
+                "Книги",
+                "Путешествия"
+            )
+        }
+        categoriesLoaded = true
 
 
-    /*LaunchedEffect(selectedDate, selectedCategories) {
-        val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
-        val claimedCouponIds = claimedCoupons.map { it.id }
-
-        val dateKey = selectedDate.toString() // например, "2025-05-16"
-
-        coupon = couponRepository.getOrGenerateCouponForDate(
-            context,
-            dateKey,
-            selectedCategories,
-            claimedCouponIds
-        )
-    }*/
-
-
-    var coupon by remember { mutableStateOf<Coupon?>(null) }
-   /* LaunchedEffect(selectedCategories) {
-        val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
-        val claimedCouponIds = claimedCoupons.map { it.id }
-
-        coupon = couponRepository.getRandomCouponByCategories(
-            selectedCategories,
-            claimedCouponIds
-        )
-    }*/
-
-    LaunchedEffect(Unit) {
         val todayStr = today.toString()
         val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, todayStr)
         if (savedCoupon != null) {
@@ -90,15 +90,18 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
+
     LaunchedEffect(selectedDate) {
+        if (!categoriesLoaded) return@LaunchedEffect
         val dateStr = selectedDate.toString()
         val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, dateStr)
         coupon = savedCoupon
+        Log.d("ToastDebug", "Показ купона: ${savedCoupon?.storeName}")
+        Log.d("CouponDebug", "Категории: $selectedCategories")
     }
 
     var isClaimed by remember { mutableStateOf(false) }
 
-    // Проверяем, забран ли текущий купон
     LaunchedEffect(coupon) {
         if (coupon != null) {
             val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
@@ -107,6 +110,7 @@ fun HomeScreen(navController: NavController) {
             isClaimed = false
         }
     }
+
 
     Column(modifier = Modifier.padding(16.dp)) {
         CalendarRow(
@@ -133,7 +137,6 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //val isButtonEnabled = selectedDate == today && coupon != null
         val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
 
         Button(
@@ -147,15 +150,6 @@ fun HomeScreen(navController: NavController) {
                         } else {
                             isClaimed = false
                         }
-                        /*val claimedCouponIds = claimedCouponDao
-                            .getAllClaimedCoupons()
-                            .first()
-                            .map { claimed -> claimed.id }*/
-
-                       /* coupon = couponRepository.getRandomCouponByCategories(
-                            selectedCategories,
-                            claimedCouponIds
-                        )*/
                     }
 
                 }

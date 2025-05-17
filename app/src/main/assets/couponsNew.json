@@ -4,7 +4,7 @@
     "category": "Техника",
     "description": "Скидка 20% на все товары",
     "imageUrl": "dns",
-    "id": "dns_tech_1",
+    "id": "dns_tech_all_20",
     "isActive": true,
     "weight": 1
   },
@@ -13,7 +13,7 @@
     "category": "Еда",
     "description": "Бесплатная кола",
     "imageUrl": "samokat",
-    "id": "samokat_food_1",
+    "id": "samokat_food_free_cola",
     "isActive": true,
     "weight": 1
   },
@@ -22,7 +22,7 @@
     "category": "Музыка",
     "description": "Яндекс плюс на 10 дней",
     "imageUrl": "yandex",
-    "id": "yandex_music_1",
+    "id": "yandex_music_plus_10d",
     "isActive": true,
     "weight": 1
   },
@@ -31,7 +31,7 @@
     "category": "Книги",
     "description": "Скидка 30% на бумажные книги",
     "imageUrl": "test",
-    "id": "ozon_books_30",
+    "id": "ozon_books_paper_30",
     "isActive": true,
     "weight": 1
   },
@@ -40,7 +40,7 @@
     "category": "Одежда",
     "description": "Скидка 25% на летнюю коллекцию",
     "imageUrl": "test",
-    "id": "wildberries_clothes_1",
+    "id": "wildberries_clothes_summer_25",
     "isActive": true,
     "weight": 1
   },
@@ -49,7 +49,7 @@
     "category": "Продукты",
     "description": "Скидка 10% на все свежие фрукты",
     "imageUrl": "test",
-    "id": "perekrestok_groceries_1",
+    "id": "perekrestok_groceries_fruits_10",
     "isActive": true,
     "weight": 1
   },
@@ -58,7 +58,7 @@
     "category": "Гаджеты",
     "description": "Кэшбэк 15% на заказы от 2000₽",
     "imageUrl": "test",
-    "id": "aliexpress_gadgets_1",
+    "id": "aliexpress_gadgets_cashback_15",
     "isActive": true,
     "weight": 1
   },
@@ -67,7 +67,7 @@
     "category": "Электроника",
     "description": "Промокод на 500₽ при покупке от 5000₽",
     "imageUrl": "test",
-    "id": "mvideo_electronics_1",
+    "id": "mvideo_electronics_promo_500",
     "isActive": true,
     "weight": 1
   },
@@ -76,7 +76,7 @@
     "category": "Еда",
     "description": "Бесплатная доставка на первый заказ",
     "imageUrl": "test",
-    "id": "deliveryclub_food_1",
+    "id": "deliveryclub_food_first_free",
     "isActive": true,
     "weight": 1
   },
@@ -85,7 +85,7 @@
     "category": "Одежда",
     "description": "Скидка 20% на мужскую коллекцию",
     "imageUrl": "test",
-    "id": "hm_clothes_1",
+    "id": "hm_clothes_men_20",
     "isActive": true,
     "weight": 1
   },
@@ -94,7 +94,7 @@
     "category": "Дом",
     "description": "Подарок при покупке от 3000₽",
     "imageUrl": "test",
-    "id": "ikea_home_1",
+    "id": "ikea_home_gift_3000",
     "isActive": true,
     "weight": 1
   },
@@ -103,7 +103,7 @@
     "category": "Продукты",
     "description": "2 по цене 1 на молочные продукты",
     "imageUrl": "test",
-    "id": "pyaterochka_groceries_1",
+    "id": "pyaterochka_groceries_milk_2x1",
     "isActive": true,
     "weight": 1
   },
@@ -112,7 +112,7 @@
     "category": "Онлайн",
     "description": "Скидка 100₽ на продвижение объявления",
     "imageUrl": "test",
-    "id": "avito_online_1",
+    "id": "avito_online_ads_100",
     "isActive": true,
     "weight": 1
   },
@@ -121,7 +121,7 @@
     "category": "Книги",
     "description": "Купон на 200₽ при покупке от 1000₽",
     "imageUrl": "test",
-    "id": "chitay_books_1",
+    "id": "chitay_books_coupon_200",
     "isActive": true,
     "weight": 1
   },
@@ -130,7 +130,7 @@
     "category": "Обувь",
     "description": "Скидка 15% на весь ассортимент",
     "imageUrl": "test",
-    "id": "lamoda_shoes_1",
+    "id": "lamoda_shoes_all_15",
     "isActive": true,
     "weight": 1
   },
@@ -139,7 +139,7 @@
     "category": "Музыка",
     "description": "Премиум на 1 месяц бесплатно",
     "imageUrl": "test",
-    "id": "spotify_music_1",
+    "id": "spotify_music_premium_1m",
     "isActive": true,
     "weight": 1
   },
@@ -148,7 +148,7 @@
     "category": "Продукты",
     "description": "Промокод на 300₽ при заказе от 2000₽",
     "imageUrl": "test",
-    "id": "azbuka_groceries_1",
+    "id": "azbuka_groceries_promo_300",
     "isActive": true,
     "weight": 1
   },
@@ -157,7 +157,7 @@
     "category": "Техника",
     "description": "Скидка 10% на аксессуары",
     "imageUrl": "test",
-    "id": "dns_accessories_1",
+    "id": "dns_tech_accessories_10",
     "isActive": true,
     "weight": 1
   },
@@ -166,7 +166,7 @@
     "category": "Спорт",
     "description": "Скидка 20% на все кроссовки",
     "imageUrl": "test",
-    "id": "reebok_sport_1",
+    "id": "reebok_sport_sneakers_20",
     "isActive": true,
     "weight": 1
   },
@@ -175,7 +175,7 @@
     "category": "Продукты",
     "description": "Промокод на скидку 5% в приложении",
     "imageUrl": "test",
-    "id": "magnit_groceries_1",
+    "id": "magnit_groceries_app_5",
     "isActive": true,
     "weight": 1
   },
@@ -184,7 +184,7 @@
     "category": "Спорт",
     "description": "Скидка 25% на новую коллекцию",
     "imageUrl": "test",
-    "id": "nike_sport_1",
+    "id": "nike_sport_new_25",
     "isActive": true,
     "weight": 1
   },
@@ -193,7 +193,7 @@
     "category": "Книги",
     "description": "Электронная книга в подарок",
     "imageUrl": "test",
-    "id": "litres_books_1",
+    "id": "litres_books_ebook_gift",
     "isActive": true,
     "weight": 1
   },
@@ -202,7 +202,7 @@
     "category": "Одежда",
     "description": "Промокод на 1000₽ при покупке от 5000₽",
     "imageUrl": "test",
-    "id": "adidas_clothes_1",
+    "id": "adidas_clothes_promo_1000",
     "isActive": true,
     "weight": 1
   },
@@ -211,7 +211,7 @@
     "category": "Связь",
     "description": "10 ГБ интернета бесплатно",
     "imageUrl": "test",
-    "id": "megafon_mobile_1",
+    "id": "megafon_mobile_inet_10gb",
     "isActive": true,
     "weight": 1
   },
@@ -220,7 +220,7 @@
     "category": "Еда",
     "description": "2 бургера по цене одного",
     "imageUrl": "test",
-    "id": "burgerking_food_1",
+    "id": "burgerking_food_burgers_2x1",
     "isActive": true,
     "weight": 1
   },
@@ -229,7 +229,7 @@
     "category": "Еда",
     "description": "Сет роллов в подарок при заказе от 1500₽",
     "imageUrl": "test",
-    "id": "tanuki_food_1",
+    "id": "tanuki_food_rolls_gift",
     "isActive": true,
     "weight": 1
   },
@@ -238,7 +238,7 @@
     "category": "Одежда",
     "description": "Сезонные скидки до 50%",
     "imageUrl": "test",
-    "id": "zara_clothes_1",
+    "id": "zara_clothes_season_50",
     "isActive": true,
     "weight": 1
   },
@@ -247,7 +247,7 @@
     "category": "Продукты",
     "description": "3 по цене 2 на напитки",
     "imageUrl": "test",
-    "id": "karusel_groceries_1",
+    "id": "karusel_groceries_drinks_3x2",
     "isActive": true,
     "weight": 1
   },
@@ -256,7 +256,7 @@
     "category": "Аксессуары",
     "description": "Скидка 20% на сумки и рюкзаки",
     "imageUrl": "test",
-    "id": "lamoda_accessories_1",
+    "id": "lamoda_accessories_bags_20",
     "isActive": true,
     "weight": 1
   },
@@ -265,7 +265,7 @@
     "category": "Еда",
     "description": "Промокод на 250₽ для новых пользователей",
     "imageUrl": "test",
-    "id": "lavka_food_1",
+    "id": "lavka_food_newuser_250",
     "isActive": true,
     "weight": 1
   }
