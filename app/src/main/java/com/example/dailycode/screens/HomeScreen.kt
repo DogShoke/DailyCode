@@ -1,21 +1,31 @@
 package com.example.dailycode.screens
 
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
 import com.example.dailycode.CalendarRow
 import com.example.dailycode.CategoryDataStore
 import com.example.dailycode.CouponHistoryDataStore
@@ -23,7 +33,6 @@ import com.example.dailycode.FirebaseCouponRepository
 import com.example.dailycode.data.AppDatabase
 import com.example.dailycode.data.Coupon
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -41,17 +50,22 @@ fun HomeScreen(navController: NavController) {
     val today = remember { LocalDate.now() }
     var selectedDate by remember { mutableStateOf(today) }
 
-    //var selectedCategories by remember { mutableStateOf(emptyList<String>()) }
-    var selectedCategories by remember { mutableStateOf(listOf( "Еда",
-        "Одежда",
-        "Техника",
-        "Красота",
-        "Дом и ремонт",
-        "Развлечения",
-        "Спорт",
-        "Транспорт",
-        "Книги",
-        "Путешествия"))}
+    var selectedCategories by remember {
+        mutableStateOf(
+            listOf(
+                "Еда",
+                "Одежда",
+                "Техника",
+                "Красота",
+                "Дом и ремонт",
+                "Развлечения",
+                "Спорт",
+                "Транспорт",
+                "Книги",
+                "Путешествия"
+            )
+        )
+    }
     var coupon by remember { mutableStateOf<Coupon?>(null) }
     var categoriesLoaded by remember { mutableStateOf(false) }
 
@@ -82,7 +96,8 @@ fun HomeScreen(navController: NavController) {
             coupon = savedCoupon
         } else {
             val claimedCouponIds = claimedCouponDao.getAllClaimedCoupons().first().map { it.id }
-            val newCoupon = couponRepository.getRandomCouponByCategories(selectedCategories, claimedCouponIds)
+            val newCoupon =
+                couponRepository.getRandomCouponByCategories(selectedCategories, claimedCouponIds)
             if (newCoupon != null) {
                 CouponHistoryDataStore.saveCouponForDate(context, todayStr, newCoupon)
                 coupon = newCoupon
@@ -96,8 +111,6 @@ fun HomeScreen(navController: NavController) {
         val dateStr = selectedDate.toString()
         val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, dateStr)
         coupon = savedCoupon
-        Log.d("ToastDebug", "Показ купона: ${savedCoupon?.storeName}")
-        Log.d("CouponDebug", "Категории: $selectedCategories")
     }
 
     var isClaimed by remember { mutableStateOf(false) }
@@ -138,63 +151,175 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
-
-        Button(
-            onClick = {
-                coupon?.let {
-                    coroutineScope.launch {
-                        couponRepository.claimCouponLocally(context, it)
-                        if (coupon != null) {
-                            val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
-                            isClaimed = claimedCoupons.any { it.id == coupon!!.id }
-                        } else {
-                            isClaimed = false
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF34C924),
+                    disabledContainerColor = Color.Gray,
+                    contentColor = Color.White,
+                    disabledContentColor = Color.White
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 16.dp,
+                    pressedElevation = 8.dp,
+                    disabledElevation = 0.dp
+                ),
+                onClick = {
+                    coupon?.let {
+                        coroutineScope.launch {
+                            couponRepository.claimCouponLocally(context, it)
+                            if (coupon != null) {
+                                val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
+                                isClaimed = claimedCoupons.any { it.id == coupon!!.id }
+                            } else {
+                                isClaimed = false
+                            }
                         }
+
                     }
+                },
+                enabled = isButtonEnabled
 
-                }
-            },
-            enabled = isButtonEnabled
+            ) {
+                Text(
+                    "Забрать",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 26.sp
+                )
+            }
 
-        ) {
-            Text("ЗАБРАТЬ")
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                HomeInfoCard(
+                    modifier = Modifier.weight(1f).height(150.dp),
+                    title = "Выбрать категории",
+                    description = "Купоны выдаются в зависимости от выбранных категорий",
+                    onClick = { navController.navigate("select_categories") }
+                )
+
+                HomeInfoCard(
+                    modifier = Modifier.weight(1f).height(150.dp),
+                    title = "Мои карты",
+                    description = "Сохраненные карты магазинов для удобного доступа",
+                    onClick = { navController.navigate("cards") }
+                )
+            }
         }
-
-
-        Button(onClick = { navController.navigate("cards") }) {
-            Text("Мои карты")
-        }
-        Button(
-            onClick = { navController.navigate("select_categories") },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("Выбрать категории")
-        }
-
     }
-
-
-
 }
 
 @Composable
 fun CouponItem(coupon: Coupon) {
-    Column {
-        Image(
-            painter = rememberImagePainter(coupon.imageUrl),
-            contentDescription = null,
+    val context = LocalContext.current
+    val imageResId = remember(coupon.imageUrl) {
+        context.resources.getIdentifier(coupon.imageUrl, "drawable", context.packageName)
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(400.dp)
+            .padding(vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color.White,
+        tonalElevation = 8.dp,
+        shadowElevation = 8.dp
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(16.dp))
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text("Магазин: ${coupon.storeName}")
-        Text("Категория: ${coupon.category}")
-        Text("Описание: ${coupon.description}")
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            if (imageResId != 0) {
+                Image(
+                    painter = painterResource(id = imageResId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "${coupon.storeName}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = coupon.category.uppercase(),
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.sp
+                    ),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = coupon.description,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        lineHeight = 24.sp
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
+                )
+
+            }
+        }
     }
 }
 
+
+@Composable
+fun HomeInfoCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    description: String,
+    onClick: () -> Unit) {
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .shadow(8.dp)
+            .background(Color.White)
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
+    ) {
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = title,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = description,
+            fontSize = 12.sp,
+            color = Color.Gray
+        )
+    }
+}
 
 
 

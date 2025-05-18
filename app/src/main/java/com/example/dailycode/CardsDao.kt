@@ -16,4 +16,8 @@ interface CardsDao {
 
     @Delete
     suspend fun delete(card: Card)
+
+    @Query("SELECT * FROM cards WHERE id = :id LIMIT 1")
+    suspend fun getCardById(id: Int): Card?
+
 }

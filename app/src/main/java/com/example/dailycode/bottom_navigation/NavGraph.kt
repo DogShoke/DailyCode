@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.dailycode.screens.BarcodeScannerScreen
+import com.example.dailycode.screens.CardDetailsScreen
 import com.example.dailycode.screens.CardsScreen
 import com.example.dailycode.screens.CategorySelectionScreen
 import com.example.dailycode.screens.HomeScreen
@@ -46,6 +47,13 @@ fun NavGraph(
                 onCategoriesSelected = { selected ->
                 }
             )
+        }
+
+        composable("cardDetails/{cardId}") { backStackEntry ->
+            val cardId = backStackEntry.arguments?.getString("cardId")?.toIntOrNull()
+            cardId?.let {
+                CardDetailsScreen(cardId = it, navController = navHostController)
+            }
         }
 
     }

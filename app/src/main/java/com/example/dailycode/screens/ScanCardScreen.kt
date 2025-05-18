@@ -1,6 +1,8 @@
 package com.example.dailycode.screens
 
 import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -17,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.dailycode.Card
 import com.example.dailycode.data.AppDatabase
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -95,4 +99,3 @@ fun RequestCameraPermission(onPermissionGranted: () -> Unit) {
         permissionLauncher.launch(Manifest.permission.CAMERA)
     }
 }
-

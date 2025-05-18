@@ -78,6 +78,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.code.gson:gson:2.10.1")
 
+    implementation("com.google.zxing:core:3.5.2")
 
 
     implementation(libs.androidx.core.ktx)
