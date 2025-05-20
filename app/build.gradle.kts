@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.foundation.android)
     val room_version = "2.6.1"
     implementation ("com.google.code.gson:gson:2.10.1")
 
@@ -79,6 +80,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("com.google.zxing:core:3.5.2")
+
+    implementation("com.google.accompanist:accompanist-pager:0.34.0")
 
 
     implementation(libs.androidx.core.ktx)

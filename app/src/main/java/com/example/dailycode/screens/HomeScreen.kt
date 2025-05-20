@@ -2,9 +2,14 @@ package com.example.dailycode.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,9 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,6 +44,8 @@ import com.example.dailycode.data.Coupon
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import kotlin.math.roundToInt
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -124,100 +135,107 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
+    SwipeableHomeScreen(
+        selectedDate = selectedDate,
+        onDateChange = { newDate ->
+            selectedDate = newDate
+        },
+        contentForDate = { date ->
+        Column(modifier = Modifier.padding(16.dp)) {
+            CalendarRow(
+                selectedDate = selectedDate,
+                onDateSelected = { selectedDate = it },
+                today = today
+            )
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        CalendarRow(
-            selectedDate = selectedDate,
-            onDateSelected = { selectedDate = it },
-            today = today
-        )
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+            when {
+                selectedDate.isAfter(today) -> {
+                    Text("Купон пока недоступен. Дождитесь нужной даты.")
+                }
 
-        when {
-            selectedDate.isAfter(today) -> {
-                Text("Купон пока недоступен. Дождитесь нужной даты.")
-            }
+                coupon != null -> {
+                    CouponItem(coupon!!)
+                }
 
-            coupon != null -> {
-                CouponItem(coupon!!)
-            }
-
-            else -> {
-                Text("Нет купонов для выбранной даты")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF34C924),
-                    disabledContainerColor = Color.Gray,
-                    contentColor = Color.White,
-                    disabledContentColor = Color.White
-                ),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 16.dp,
-                    pressedElevation = 8.dp,
-                    disabledElevation = 0.dp
-                ),
-                onClick = {
-                    coupon?.let {
-                        coroutineScope.launch {
-                            couponRepository.claimCouponLocally(context, it)
-                            if (coupon != null) {
-                                val claimedCoupons = claimedCouponDao.getAllClaimedCoupons().first()
-                                isClaimed = claimedCoupons.any { it.id == coupon!!.id }
-                            } else {
-                                isClaimed = false
-                            }
-                        }
-
-                    }
-                },
-                enabled = isButtonEnabled
-
-            ) {
-                Text(
-                    "Забрать",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 26.sp
-                )
+                else -> {
+                    Text("Нет купонов для выбранной даты")
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth()
+            val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
-                HomeInfoCard(
-                    modifier = Modifier.weight(1f).height(150.dp),
-                    title = "Выбрать категории",
-                    description = "Купоны выдаются в зависимости от выбранных категорий",
-                    onClick = { navController.navigate("select_categories") }
-                )
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF34C924),
+                        disabledContainerColor = Color.Gray,
+                        contentColor = Color.White,
+                        disabledContentColor = Color.White
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 16.dp,
+                        pressedElevation = 8.dp,
+                        disabledElevation = 0.dp
+                    ),
+                    onClick = {
+                        coupon?.let {
+                            coroutineScope.launch {
+                                couponRepository.claimCouponLocally(context, it)
+                                if (coupon != null) {
+                                    val claimedCoupons =
+                                        claimedCouponDao.getAllClaimedCoupons().first()
+                                    isClaimed = claimedCoupons.any { it.id == coupon!!.id }
+                                } else {
+                                    isClaimed = false
+                                }
+                            }
 
-                HomeInfoCard(
-                    modifier = Modifier.weight(1f).height(150.dp),
-                    title = "Мои карты",
-                    description = "Сохраненные карты магазинов для удобного доступа",
-                    onClick = { navController.navigate("cards") }
-                )
+                        }
+                    },
+                    enabled = isButtonEnabled
+
+                ) {
+                    Text(
+                        "Забрать",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 26.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    HomeInfoCard(
+                        modifier = Modifier.weight(1f).height(150.dp),
+                        title = "Выбрать категории",
+                        description = "Купоны выдаются в зависимости от выбранных категорий",
+                        onClick = { navController.navigate("select_categories") }
+                    )
+
+                    HomeInfoCard(
+                        modifier = Modifier.weight(1f).height(150.dp),
+                        title = "Мои карты",
+                        description = "Сохраненные карты магазинов для удобного доступа",
+                        onClick = { navController.navigate("cards") }
+                    )
+                }
             }
         }
-    }
+    })
 }
 
 @Composable
@@ -285,6 +303,50 @@ fun CouponItem(coupon: Coupon) {
 
             }
         }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun SwipeableHomeScreen(
+    selectedDate: LocalDate,
+    onDateChange: (LocalDate) -> Unit,
+    contentForDate: @Composable (LocalDate) -> Unit
+) {
+    val swipeThreshold = 100.dp
+    val density = LocalDensity.current
+    val thresholdPx = with(density) { swipeThreshold.toPx() }
+
+    var dragOffset by remember { mutableStateOf(0f) }
+    var isSwiping by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(selectedDate) {
+                detectHorizontalDragGestures(
+                    onDragStart = {
+                        isSwiping = true
+                    },
+                    onHorizontalDrag = { _, dragAmount ->
+                        dragOffset += dragAmount
+                    },
+                    onDragEnd = {
+                        isSwiping = false
+                        when {
+                            dragOffset > thresholdPx -> {
+                                onDateChange(selectedDate.minusDays(1))
+                            }
+                            dragOffset < -thresholdPx -> {
+                                onDateChange(selectedDate.plusDays(1))
+                            }
+                        }
+                        dragOffset = 0f
+                    }
+                )
+            }
+    ) {
+        contentForDate(selectedDate)
     }
 }
 

@@ -25,7 +25,7 @@ fun NavGraph(
             HomeScreen(navHostController)
         }
         composable("coupons"){
-            MyCouponsScreen()
+            MyCouponsScreen(navHostController)
         }
         composable("settings"){
             SettingsScreen()

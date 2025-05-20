@@ -9,13 +9,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.dailycode.Card
 import com.example.dailycode.data.AppDatabase
@@ -33,54 +36,82 @@ fun ScanCardScreen(navController: NavController, scannedCardNumber: String) {
     var storeName by remember { mutableStateOf("") }
     var saved by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-
-        Text("Сохранение карты магазина", modifier = Modifier.padding(bottom = 16.dp))
-
-        OutlinedTextField(
-            value = storeName,
-            onValueChange = { storeName = it },
-            label = { Text("Название магазина") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = scannedCardNumber,
-            onValueChange = {},
-            label = { Text("Номер карты (из QR/штрихкода)") },
-            enabled = false,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                val card = Card(
-                    storeName = storeName,
-                    cardNumber = scannedCardNumber
-                )
-                coroutineScope.launch {
-                    db.cardDao().insertCard(card)
-                    saved = true
-                }
-            },
-            enabled = storeName.isNotBlank()
+    Column(modifier = Modifier.fillMaxSize()) {
+        // TopBar
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shadowElevation = 4.dp
         ) {
-            Text("Сохранить")
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                IconButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 8.dp)
+                ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Назад")
+                }
+                Text(
+                    "Сохранение карты",
+                    fontWeight = FontWeight(700),
+                    fontSize = 24.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
 
-        if (saved) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(
+                value = storeName,
+                onValueChange = { storeName = it },
+                label = { Text("Название магазина") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Spacer(modifier = Modifier.height(12.dp))
-            Text("Карта успешно сохранена!")
+
+            OutlinedTextField(
+                value = scannedCardNumber,
+                onValueChange = {},
+                label = { Text("Номер карты (из QR/штрихкода)") },
+                enabled = false,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    val card = Card(
+                        storeName = storeName,
+                        cardNumber = scannedCardNumber
+                    )
+                    coroutineScope.launch {
+                        db.cardDao().insertCard(card)
+                        saved = true
+                    }
+                },
+                enabled = storeName.isNotBlank()
+            ) {
+                Text("Сохранить")
+            }
+
+            if (saved) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text("Карта успешно сохранена!")
+            }
         }
     }
 }
-
 
 @Composable
 fun RequestCameraPermission(onPermissionGranted: () -> Unit) {

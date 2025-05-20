@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -13,12 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.Alignment
+import androidx.navigation.NavController
 import com.example.dailycode.ClaimedCoupon
 import com.example.dailycode.data.AppDatabase
 import kotlinx.coroutines.launch
 
 @Composable
-fun MyCouponsScreen() {
+fun MyCouponsScreen(navController: NavController) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var claimedCoupons by remember { mutableStateOf<List<ClaimedCoupon>>(emptyList()) }
@@ -30,58 +34,84 @@ fun MyCouponsScreen() {
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-
-        Text(
-            "Забранные купоны",
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            textAlign = TextAlign.Center
-        )
-
-        if (claimedCoupons.isEmpty()) {
-            Text(
-                "Нет забранных купонов",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-        } else {
-            LazyColumn(
+    Scaffold(
+        topBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                shadowElevation = 4.dp
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    IconButton(
+                        onClick = { navController.popBackStack() },
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 8.dp)
+                    ) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Назад")
+                    }
+                    Text(
+                        "Забранные купоны",
+                        fontWeight = FontWeight(700),
+                        fontSize = 24.sp,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            }
+        },
+        content = { paddingValues ->
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 90.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(paddingValues)
+                    .padding(horizontal = 16.dp)
             ) {
-                items(claimedCoupons) { coupon ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+                if (claimedCoupons.isEmpty()) {
+                    Text(
+                        "Нет забранных купонов",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        textAlign = TextAlign.Center
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 90.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Магазин: ${coupon.storeName}")
-                            Text("Категория: ${coupon.category}")
-                            Text("Описание: ${coupon.description}")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Button(onClick = {
-                                coroutineScope.launch {
-                                    val db = AppDatabase.getDatabase(context)
-                                    db.claimedCouponDao().deleteClaimedCoupon(coupon)
-                                    db.claimedCouponDao().getAllClaimedCoupons().collect { updatedList ->
-                                        claimedCoupons = updatedList
+                        items(claimedCoupons) { coupon ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Text("Магазин: ${coupon.storeName}")
+                                    Text("Категория: ${coupon.category}")
+                                    Text("Описание: ${coupon.description}")
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Button(onClick = {
+                                        coroutineScope.launch {
+                                            val db = AppDatabase.getDatabase(context)
+                                            db.claimedCouponDao().deleteClaimedCoupon(coupon)
+                                            db.claimedCouponDao().getAllClaimedCoupons().collect { updatedList ->
+                                                claimedCoupons = updatedList
+                                            }
+                                        }
+                                    }) {
+                                        Text("Удалить")
                                     }
                                 }
-                            }) {
-                                Text("Удалить")
                             }
                         }
                     }
                 }
             }
         }
-    }
+    )
 }

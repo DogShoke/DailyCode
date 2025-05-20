@@ -1,4 +1,3 @@
-/*
 package com.example.dailycode.screens
 
 import androidx.annotation.OptIn
@@ -75,8 +74,8 @@ fun BarcodeScannerScreen(navController: NavController) {
         cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, analyzer)
     }
 }
-*/
 
+/*
 package com.example.dailycode.screens
 
 import android.graphics.BitmapFactory
@@ -153,4 +152,4 @@ fun BarcodeScannerScreen(navController: NavController) {
         cameraProvider.unbindAll()
         cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, analyzer)
     }
-}
+}*/
