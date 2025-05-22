@@ -1,0 +1,302 @@
+[
+  {
+    "active": true,
+    "category": "Одежда",
+    "description": "Скидка 20% на верхнюю одежду",
+    "id": "lamoda_winter_20",
+    "imageUrl": "test",
+    "storeName": "Lamoda",
+    "weight": 1,
+    "code": "673489012367"
+  },
+  {
+    "active": true,
+    "category": "Еда",
+    "description": "Бесплатный десерт при заказе от 500₽",
+    "id": "vkusno_dessert_free",
+    "imageUrl": "test",
+    "storeName": "Вкусно — и точка",
+    "weight": 1,
+    "code": "234567891234"
+  },
+  {
+    "active": true,
+    "category": "Техника",
+    "description": "Рассрочка 0% на ноутбуки",
+    "id": "citilink_laptop_0",
+    "imageUrl": "test",
+    "storeName": "Ситилинк",
+    "weight": 1,
+    "code": "345678901245"
+  },
+  {
+    "active": true,
+    "category": "Красота",
+    "description": "Набор пробников за 1₽ при покупке",
+    "id": "podrygka_sample_1",
+    "imageUrl": "test",
+    "storeName": "Подружка",
+    "weight": 1,
+    "code": "456789012356"
+  },
+  {
+    "active": true,
+    "category": "Дом и ремонт",
+    "description": "Скидка 30% на светильники",
+    "id": "leroy_light_30",
+    "imageUrl": "test",
+    "storeName": "Леруа Мерлен",
+    "weight": 1,
+    "code": "567890123467"
+  },
+  {
+    "active": true,
+    "category": "Развлечения",
+    "description": "Месяц подписки за 1₽",
+    "id": "ivi_sub_1",
+    "imageUrl": "test",
+    "storeName": "IVI",
+    "weight": 1,
+    "code": "678901234578"
+  },
+  {
+    "active": true,
+    "category": "Спорт",
+    "description": "Скидка 25% на велосипеды",
+    "id": "sportmaster_bike_25",
+    "imageUrl": "test",
+    "storeName": "Sportmaster",
+    "weight": 1,
+    "code": "789012345689"
+  },
+  {
+    "active": true,
+    "category": "Транспорт",
+    "description": "3 поездки бесплатно в Яндекс Такси",
+    "id": "yandex_taxi_3",
+    "imageUrl": "test",
+    "storeName": "Яндекс Такси",
+    "weight": 1,
+    "code": "890123456790"
+  },
+  {
+    "active": true,
+    "category": "Книги",
+    "description": "Электронная книга в подарок",
+    "id": "litres_ebook_gift",
+    "imageUrl": "test",
+    "storeName": "ЛитРес",
+    "weight": 1,
+    "code": "901234567801"
+  },
+  {
+    "active": true,
+    "category": "Путешествия",
+    "description": "Кэшбэк 10% на отели",
+    "id": "tutu_hotel_10",
+    "imageUrl": "test",
+    "storeName": "Tutu.ru",
+    "weight": 1,
+    "code": "012345678912"
+  },
+  {
+    "active": true,
+    "category": "Еда",
+    "description": "Скидка 15% на выпечку",
+    "id": "pyaterochka_bakery_15",
+    "imageUrl": "test",
+    "storeName": "Пятерочка",
+    "weight": 1,
+    "code": "112233445566"
+  },
+  {
+    "active": true,
+    "category": "Техника",
+    "description": "Бесплатная доставка техники",
+    "id": "mvideo_delivery_free",
+    "imageUrl": "test",
+    "storeName": "М.Видео",
+    "weight": 1,
+    "code": "223344556677"
+  },
+  {
+    "active": true,
+    "category": "Одежда",
+    "description": "Скидка 1000₽ на заказ от 5000₽",
+    "id": "wildberries_1000",
+    "imageUrl": "test",
+    "storeName": "Wildberries",
+    "weight": 1,
+    "code": "334455667788"
+  },
+  {
+    "active": true,
+    "category": "Красота",
+    "description": "Подарочный набор за 2 покупки",
+    "id": "rive_gauche_gift",
+    "imageUrl": "test",
+    "storeName": "Рив Гош",
+    "weight": 1,
+    "code": "445566778899"
+  },
+  {
+    "active": true,
+    "category": "Дом и ремонт",
+    "description": "Скидка 50% на краску",
+    "id": "maxidom_paint_50",
+    "imageUrl": "test",
+    "storeName": "Максидом",
+    "weight": 1,
+    "code": "556677889900"
+  },
+  {
+    "active": true,
+    "category": "Развлечения",
+    "description": "2 месяца подписки за 299₽",
+    "id": "okko_sub_299",
+    "imageUrl": "test",
+    "storeName": "Okko",
+    "weight": 1,
+    "code": "667788990011"
+  },
+  {
+    "active": true,
+    "category": "Спорт",
+    "description": "Скидка 40% на экипировку",
+    "id": "decathlon_equip_40",
+    "imageUrl": "test",
+    "storeName": "Decathlon",
+    "weight": 1,
+    "code": "778899001122"
+  },
+  {
+    "active": true,
+    "category": "Транспорт",
+    "description": "Скидка 20% на каршеринг",
+    "id": "citydrive_20",
+    "imageUrl": "test",
+    "storeName": "Ситимобил",
+    "weight": 1,
+    "code": "889900112233"
+  },
+  {
+    "active": true,
+    "category": "Книги",
+    "description": "Бестселлеры со скидкой 30%",
+    "id": "book24_bestseller_30",
+    "imageUrl": "test",
+    "storeName": "Book24",
+    "weight": 1,
+    "code": "990011223344"
+  },
+  {
+    "active": true,
+    "category": "Путешествия",
+    "description": "Бесплатная страховка в поездку",
+    "id": "sletat_insurance_free",
+    "imageUrl": "test",
+    "storeName": "Слетать.ру",
+    "weight": 1,
+    "code": "001122334455"
+  },
+  {
+    "active": true,
+    "category": "Еда",
+    "description": "Кофе за 1₽ при заказе с собой",
+    "id": "kfc_coffee_1",
+    "imageUrl": "test",
+    "storeName": "KFC",
+    "weight": 1,
+    "code": "123409876543"
+  },
+  {
+    "active": true,
+    "category": "Техника",
+    "description": "Скидка 7000₽ на холодильники",
+    "id": "eldorado_fridge_7000",
+    "imageUrl": "test",
+    "storeName": "Эльдорадо",
+    "weight": 1,
+    "code": "234518765432"
+  },
+  {
+    "active": true,
+    "category": "Одежда",
+    "description": "Свитшоты за 999₽",
+    "id": "gloria_jeans_sweatshirt",
+    "imageUrl": "test",
+    "storeName": "Gloria Jeans",
+    "weight": 1,
+    "code": "345627654321"
+  },
+  {
+    "active": true,
+    "category": "Красота",
+    "description": "Пробник парфюма в подарок",
+    "id": "letu_sample_gift",
+    "imageUrl": "test",
+    "storeName": "Л'Этуаль",
+    "weight": 1,
+    "code": "456736543210"
+  },
+  {
+    "active": true,
+    "category": "Дом и ремонт",
+    "description": "Ковры со скидкой 40%",
+    "id": "ikea_carpet_40",
+    "imageUrl": "test",
+    "storeName": "IKEA",
+    "weight": 1,
+    "code": "567845432109"
+  },
+  {
+    "active": true,
+    "category": "Развлечения",
+    "description": "Билет в кино за 199₽",
+    "id": "karo_cinema_199",
+    "imageUrl": "test",
+    "storeName": "Кинотеатры Каро",
+    "weight": 1,
+    "code": "678954321098"
+  },
+  {
+    "active": true,
+    "category": "Спорт",
+    "description": "Скидка 15% на абонемент",
+    "id": "worldclass_sub_15",
+    "imageUrl": "test",
+    "storeName": "World Class",
+    "weight": 1,
+    "code": "789063210987"
+  },
+  {
+    "active": true,
+    "category": "Транспорт",
+    "description": "День аренды авто за 1₽",
+    "id": "belka_car_1",
+    "imageUrl": "test",
+    "storeName": "BelkaCar",
+    "weight": 1,
+    "code": "890172109876"
+  },
+  {
+    "active": true,
+    "category": "Книги",
+    "description": "Аудиокнига в подарок",
+    "id": "chitai_audio_gift",
+    "imageUrl": "test",
+    "storeName": "Читай-город",
+    "weight": 1,
+    "code": "901281098765"
+  },
+  {
+    "active": true,
+    "category": "Путешествия",
+    "description": "Кэшбэк 15% на авиабилеты",
+    "id": "ozon_travel_15",
+    "imageUrl": "test",
+    "storeName": "Ozon Travel",
+    "weight": 1,
+    "code": "012390987654"
+  }
+]
