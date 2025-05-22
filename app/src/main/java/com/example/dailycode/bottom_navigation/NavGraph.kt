@@ -4,12 +4,16 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.dailycode.ClaimedCoupon
 import com.example.dailycode.screens.BarcodeScannerScreen
 import com.example.dailycode.screens.CardDetailsScreen
 import com.example.dailycode.screens.CardsScreen
 import com.example.dailycode.screens.CategorySelectionScreen
+import com.example.dailycode.screens.CouponDetailScreen
 import com.example.dailycode.screens.HomeScreen
 import com.example.dailycode.screens.MyCouponsScreen
 import com.example.dailycode.screens.ScanCardScreen
@@ -54,6 +58,32 @@ fun NavGraph(
             cardId?.let {
                 CardDetailsScreen(cardId = it, navController = navHostController)
             }
+        }
+
+        composable(
+            route = "coupon_detail/{storeName}/{category}/{description}/{code}/{imageUrl}",
+            arguments = listOf(
+                navArgument("storeName") { type = NavType.StringType },
+                navArgument("category") { type = NavType.StringType },
+                navArgument("description") { type = NavType.StringType },
+                navArgument("code") { type = NavType.StringType },
+                navArgument("imageUrl") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val storeName = backStackEntry.arguments?.getString("storeName") ?: ""
+            val category = backStackEntry.arguments?.getString("category") ?: ""
+            val description = backStackEntry.arguments?.getString("description") ?: ""
+            val code = backStackEntry.arguments?.getString("code") ?: ""
+            val imageUrl = backStackEntry.arguments?.getString("imageUrl") ?: ""
+
+            CouponDetailScreen(
+                navController = navHostController,
+                storeName = storeName,
+                category = category,
+                description = description,
+                code = code,
+                imageUrl = imageUrl
+            )
         }
 
     }

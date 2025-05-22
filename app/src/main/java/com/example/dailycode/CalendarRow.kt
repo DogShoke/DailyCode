@@ -60,10 +60,11 @@ fun CalendarRow(
 @Composable
 fun DayItem(day: Day, isToday: Boolean, isSelected: Boolean, onClick: () -> Unit) {
     val backgroundColor = when {
-        isSelected -> Color.Gray
+        isSelected -> Color(0xFF7AC87A)
+        isToday -> Color(0xFFBDEDBD)
         else -> Color.LightGray
     }
-    val borderColor = if (isToday) Color.Blue else Color.Transparent
+    val borderColor = Color.Transparent
     val dayOfWeek = day.date.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale("ru"))
         .uppercase()
     Column(
@@ -85,6 +86,7 @@ fun DayItem(day: Day, isToday: Boolean, isSelected: Boolean, onClick: () -> Unit
                 text = day.date.dayOfMonth.toString(),
                 fontSize = 16.sp,
                 color = Color.White
+
             )
         }
         Spacer(modifier = Modifier.height(4.dp))

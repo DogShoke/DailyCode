@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 import java.time.format.TextStyle
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategorySelectionScreen(
     navController: NavController,
@@ -84,7 +83,6 @@ fun CategorySelectionScreen(
                         .height(64.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Кнопка назад
                     IconButton(
                         onClick = { navController.popBackStack() },
                         modifier = Modifier
@@ -122,7 +120,7 @@ fun CategorySelectionScreen(
                         .padding(16.dp)
                         .height(60.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF34C924),
+                        containerColor = Color( 0xFF7AC87A),
                         contentColor = Color.White
                     )
                 ) {
@@ -161,8 +159,8 @@ fun CategorySelectionScreen(
                         checked = isSelected,
                         onCheckedChange = null,
                         colors = CheckboxDefaults.colors(
-                            checkedColor = Color(0xFF34C924),
-                            uncheckedColor = Color(0xFF34C924),
+                            checkedColor =  Color( 0xFF7AC87A),
+                            uncheckedColor = Color( 0xFF7AC87A),
                             checkmarkColor = Color.White
                     )
                     )

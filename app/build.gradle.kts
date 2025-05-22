@@ -82,7 +82,7 @@ dependencies {
     implementation("com.google.zxing:core:3.5.2")
 
     implementation("com.google.accompanist:accompanist-pager:0.34.0")
-
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

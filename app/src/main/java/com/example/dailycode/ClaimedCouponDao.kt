@@ -14,11 +14,14 @@ interface ClaimedCouponDao {
     suspend fun insert(claimedCoupon: ClaimedCoupon)
 
     @Delete
-    suspend fun deleteClaimedCoupon(coupon: ClaimedCoupon)
+    suspend fun delete(coupon: ClaimedCoupon)
 
     @Query("SELECT * FROM claimed_coupons")
     fun getAllClaimedCoupons(): Flow<List<ClaimedCoupon>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM claimed_coupons WHERE id = :couponId)")
     suspend fun isCouponClaimed(couponId: String): Boolean
+
+    @Query("SELECT * FROM claimed_coupons WHERE description = :description LIMIT 1")
+    suspend fun getByDescription(description: String): ClaimedCoupon?
 }

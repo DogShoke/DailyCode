@@ -7,5 +7,6 @@ data class Coupon(
     var description: String = "",
     var imageUrl: String = "",
     var isActive: Boolean = true,
-    var weight: Double = 1.0
+    var weight: Double = 1.0,
+    val code: String = ""
 )

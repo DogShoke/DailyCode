@@ -22,6 +22,17 @@ class FirebaseCouponRepository {
         return querySnapshot.documents.mapNotNull { it.toObject(Coupon::class.java) }
     }
 
+    suspend fun deleteClaimedCoupon(context: Context, coupon: ClaimedCoupon) {
+        val db = AppDatabase.getDatabase(context)
+        val claimedCouponDao = db.claimedCouponDao()
+        claimedCouponDao.delete(coupon)
+    }
+
+    suspend fun getClaimedCouponByDescription(context: Context, description: String): ClaimedCoupon? {
+        val db = AppDatabase.getDatabase(context)
+        val dao = db.claimedCouponDao()
+        return dao.getByDescription(description)
+    }
 
     suspend fun getRandomCouponByCategories(
         categories: List<String>,
@@ -59,7 +70,8 @@ class FirebaseCouponRepository {
             imageUrl = coupon.imageUrl,
             isClaimed = true,
             isActive = coupon.isActive,
-            weight = coupon.weight
+            weight = coupon.weight,
+            code = coupon.code
         )
 
         claimedCouponDao.insert(claimedCoupon)

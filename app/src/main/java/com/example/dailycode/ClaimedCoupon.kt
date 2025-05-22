@@ -14,5 +14,6 @@ data class ClaimedCoupon(
     val imageUrl: String,
     val isClaimed: Boolean = true,
     val isActive: Boolean = true,
-    val weight: Double = 1.0
+    val weight: Double = 1.0,
+    val code: String
 )

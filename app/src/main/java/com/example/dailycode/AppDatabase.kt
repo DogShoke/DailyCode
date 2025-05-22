@@ -14,7 +14,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 
-@Database(entities = [Card::class, ClaimedCoupon::class], version = 12)
+@Database(entities = [Card::class, ClaimedCoupon::class], version = 14)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun claimedCouponDao(): ClaimedCouponDao
     abstract fun cardDao(): CardsDao

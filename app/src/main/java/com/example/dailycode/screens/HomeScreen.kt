@@ -1,5 +1,6 @@
 package com.example.dailycode.screens
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Spring
@@ -31,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,6 +52,7 @@ import kotlin.math.roundToInt
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavController) {
+    var isCouponLoading by remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -79,6 +82,12 @@ fun HomeScreen(navController: NavController) {
     }
     var coupon by remember { mutableStateOf<Coupon?>(null) }
     var categoriesLoaded by remember { mutableStateOf(false) }
+    val sharedPrefs = context.getSharedPreferences("coupon_prefs", Context.MODE_PRIVATE)
+    var lastClaimedDate by remember {
+        mutableStateOf(
+            sharedPrefs.getString("last_claimed_date", null)?.let { LocalDate.parse(it) }
+        )
+    }
 
     LaunchedEffect(Unit) {
         val savedCategories = CategoryDataStore.loadCategories(context)
@@ -119,9 +128,11 @@ fun HomeScreen(navController: NavController) {
 
     LaunchedEffect(selectedDate) {
         if (!categoriesLoaded) return@LaunchedEffect
+        isCouponLoading = true
         val dateStr = selectedDate.toString()
         val savedCoupon = CouponHistoryDataStore.getCouponForDate(context, dateStr)
         coupon = savedCoupon
+        isCouponLoading = false
     }
 
     var isClaimed by remember { mutableStateOf(false) }
@@ -150,23 +161,19 @@ fun HomeScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            when {
-                selectedDate.isAfter(today) -> {
-                    Text("Купон пока недоступен. Дождитесь нужной даты.")
-                }
-
-                coupon != null -> {
+            if (!isCouponLoading) {
+                if (selectedDate.isAfter(today)) {
+                    UnavailableCouponItem()
+                } else if (coupon != null) {
                     CouponItem(coupon!!)
-                }
-
-                else -> {
-                    Text("Нет купонов для выбранной даты")
+                } else {
+                    UnavailableCouponItem()
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed
+            val isButtonEnabled = selectedDate == today && coupon != null && !isClaimed && lastClaimedDate != today
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -178,7 +185,7 @@ fun HomeScreen(navController: NavController) {
                         .height(50.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF34C924),
+                        containerColor = Color( 0xFF7AC87A),
                         disabledContainerColor = Color.Gray,
                         contentColor = Color.White,
                         disabledContentColor = Color.White
@@ -192,6 +199,8 @@ fun HomeScreen(navController: NavController) {
                         coupon?.let {
                             coroutineScope.launch {
                                 couponRepository.claimCouponLocally(context, it)
+                                sharedPrefs.edit().putString("last_claimed_date", today.toString()).apply()
+                                lastClaimedDate = today
                                 if (coupon != null) {
                                     val claimedCoupons =
                                         claimedCouponDao.getAllClaimedCoupons().first()
@@ -288,9 +297,10 @@ fun CouponItem(coupon: Coupon) {
                     text = coupon.category.uppercase(),
                     style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
+                        letterSpacing = 1.sp,
                     ),
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                    color = Color( 0xFF7AC87A),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -302,6 +312,54 @@ fun CouponItem(coupon: Coupon) {
                 )
 
             }
+        }
+    }
+}
+
+@Composable
+fun UnavailableCouponItem() {
+    val context = LocalContext.current
+    val imageResId = remember {
+        context.resources.getIdentifier("test", "drawable", context.packageName)
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(400.dp)
+            .padding(vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color.White,
+        tonalElevation = 8.dp,
+        shadowElevation = 8.dp
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            if (imageResId != 0) {
+                Image(
+                    painter = painterResource(id = imageResId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
+            Text(
+                text = "Купон пока недоступен. Дождитесь нужной даты.",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Gray,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
         }
     }
 }
@@ -359,8 +417,8 @@ fun HomeInfoCard(
     onClick: () -> Unit) {
     Column(
         modifier = modifier
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(16.dp))
-            .shadow(8.dp)
             .background(Color.White)
             .clickable(onClick = onClick)
             .padding(16.dp),
