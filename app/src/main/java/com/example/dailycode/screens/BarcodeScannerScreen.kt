@@ -74,7 +74,6 @@ fun BarcodeScannerScreen(navController: NavController) {
         cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, analyzer)
     }
 }
-
 /*
 package com.example.dailycode.screens
 
