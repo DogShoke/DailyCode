@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dailycode.ClaimedCoupon
+import com.example.dailycode.News
 import com.example.dailycode.screens.BarcodeScannerScreen
 import com.example.dailycode.screens.CardDetailsScreen
 import com.example.dailycode.screens.CardsScreen
@@ -20,6 +21,7 @@ import com.example.dailycode.screens.NewsDetailScreen
 import com.example.dailycode.screens.NewsScreen
 import com.example.dailycode.screens.ScanCardScreen
 import com.example.dailycode.screens.SettingsScreen
+import com.google.gson.Gson
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -89,30 +91,16 @@ fun NavGraph(
         }
 
         composable(
-            route = "news_detail/{name}/{date}/{description}/{image}/{category}",
+            "news_detail/{newsJson}",
             arguments = listOf(
-                navArgument("name") { type = NavType.StringType },
-                navArgument("date") { type = NavType.StringType },
-                navArgument("description") { type = NavType.StringType },
-                navArgument("image") { type = NavType.StringType },
-                navArgument("category") { type = NavType.StringType }
+                navArgument("newsJson") {
+                    type = NavType.StringType
+                }
             )
         ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
-            val date = backStackEntry.arguments?.getString("date") ?: ""
-            val descriptionFull = backStackEntry.arguments?.getString("descriptionFull") ?: ""
-            val image = backStackEntry.arguments?.getString("image") ?: ""
-            val category = backStackEntry.arguments?.getString("category") ?: ""
-
-            NewsDetailScreen(
-                navController = navHostController,
-                descriptionFull = descriptionFull,
-                name = name,
-                date = date,
-                image = image,
-                category = category
-            )
+            val newsJson = backStackEntry.arguments?.getString("newsJson")
+            val news = Gson().fromJson(newsJson, News::class.java)
+            NewsDetailScreen(navHostController, news)
         }
-
     }
 }
