@@ -16,6 +16,8 @@ import com.example.dailycode.screens.CategorySelectionScreen
 import com.example.dailycode.screens.CouponDetailScreen
 import com.example.dailycode.screens.HomeScreen
 import com.example.dailycode.screens.MyCouponsScreen
+import com.example.dailycode.screens.NewsDetailScreen
+import com.example.dailycode.screens.NewsScreen
 import com.example.dailycode.screens.ScanCardScreen
 import com.example.dailycode.screens.SettingsScreen
 
@@ -31,8 +33,8 @@ fun NavGraph(
         composable("coupons"){
             MyCouponsScreen(navHostController)
         }
-        composable("settings"){
-            SettingsScreen()
+        composable("news"){
+            NewsScreen(navHostController)
         }
 
         composable("cards") {
@@ -83,6 +85,32 @@ fun NavGraph(
                 description = description,
                 code = code,
                 imageUrl = imageUrl
+            )
+        }
+
+        composable(
+            route = "news_detail/{name}/{date}/{description}/{image}/{category}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType },
+                navArgument("date") { type = NavType.StringType },
+                navArgument("description") { type = NavType.StringType },
+                navArgument("image") { type = NavType.StringType },
+                navArgument("category") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val date = backStackEntry.arguments?.getString("date") ?: ""
+            val descriptionFull = backStackEntry.arguments?.getString("descriptionFull") ?: ""
+            val image = backStackEntry.arguments?.getString("image") ?: ""
+            val category = backStackEntry.arguments?.getString("category") ?: ""
+
+            NewsDetailScreen(
+                navController = navHostController,
+                descriptionFull = descriptionFull,
+                name = name,
+                date = date,
+                image = image,
+                category = category
             )
         }
 
