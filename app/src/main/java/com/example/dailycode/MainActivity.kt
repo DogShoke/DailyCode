@@ -9,12 +9,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.example.dailycode.bottom_navigation.MainScreen
 import com.example.dailycode.data.Coupon
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : ComponentActivity() {
@@ -34,8 +40,40 @@ class MainActivity : ComponentActivity() {
             }
         }
         uploadCouponsFromJson(this)*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+        }
         setContent {
             MainScreen()
         }
+
+        fun scheduleDailyNotification(hour: Int, minute: Int, type: String) {
+            val now = Calendar.getInstance()
+            val targetTime = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+                if (before(now)) add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            val delay = targetTime.timeInMillis - now.timeInMillis
+
+            val workRequest = PeriodicWorkRequestBuilder<CouponReminderWorker>(1, TimeUnit.DAYS)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(workDataOf("type" to type))
+                .addTag("coupon_$type")
+                .build()
+
+            WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "coupon_work_$type",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                workRequest
+            )
+        }
+
+        scheduleDailyNotification(15, 24, "morning")
+        scheduleDailyNotification(19, 0, "evening")
     }
 }
+

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -83,13 +84,14 @@ fun NewsDetailScreen(navController: NavController, news: News) {
             Box(
                 modifier = Modifier
                     .padding(paddingValues)
+                    .padding(bottom = 80.dp)
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(710.dp)
+                        .fillMaxHeight()
                         .shadow(8.dp, RoundedCornerShape(16.dp)),
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     shape = RoundedCornerShape(16.dp),
@@ -111,8 +113,6 @@ fun NewsDetailScreen(navController: NavController, news: News) {
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
-
-                        // Название новости по центру
                         Text(
                             text = news.name,
                             fontWeight = FontWeight.Bold,

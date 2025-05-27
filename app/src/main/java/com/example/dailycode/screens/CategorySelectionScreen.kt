@@ -32,7 +32,6 @@ fun CategorySelectionScreen(
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val selectedCategories = remember { mutableStateListOf<String>() }
-
     val availableCategories = listOf(
         "Еда",
         "Одежда",
@@ -175,3 +174,4 @@ fun CategorySelectionScreen(
         }
     }
 }
+

@@ -56,7 +56,8 @@ fun NewsScreen(navController: NavController, viewModel: NewsViewModel = viewMode
     Scaffold(
         topBar = {
             Surface(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                shadowElevation = 4.dp,
             color = Color.White
             ) {
                 Box(
@@ -83,7 +84,7 @@ fun NewsScreen(navController: NavController, viewModel: NewsViewModel = viewMode
             }
         },
         content = { paddingValues ->
-            LazyColumn(modifier = Modifier.padding(paddingValues).padding(bottom = 80.dp)) {
+            LazyColumn(modifier = Modifier.padding(paddingValues).fillMaxSize().padding(bottom = 80.dp)) {
                 items(newsList.reversed()) { news ->
                     NewsItem(navController, news = news)
                     //Spacer(modifier = Modifier.height(8.dp))

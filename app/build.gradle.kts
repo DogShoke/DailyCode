@@ -84,6 +84,9 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.34.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+    //уведомления
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
