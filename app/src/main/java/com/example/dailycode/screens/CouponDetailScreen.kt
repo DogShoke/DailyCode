@@ -104,6 +104,7 @@ fun CouponDetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(200.dp)
+                                    .padding(8.dp)
                                     .clip(RoundedCornerShape(12.dp))
                             )
                         }

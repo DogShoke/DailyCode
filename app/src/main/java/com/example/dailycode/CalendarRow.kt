@@ -68,9 +68,10 @@ fun DayItem(day: Day, isToday: Boolean, isSelected: Boolean, onClick: () -> Unit
     val dayOfWeek = day.date.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale("ru"))
         .uppercase()
     Column(
+
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(4.dp)
+            .padding(4.dp, top = 13.dp)
             .size(60.dp)
             .clickable { onClick() }
     ){

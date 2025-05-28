@@ -3,8 +3,7 @@ package com.example.dailycode.screens
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -15,13 +14,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.dailycode.CategoryDataStore
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
 
 
 @Composable
@@ -33,36 +30,25 @@ fun CategorySelectionScreen(
     val context = LocalContext.current
     val selectedCategories = remember { mutableStateListOf<String>() }
     val availableCategories = listOf(
-        "Еда",
-        "Одежда",
-        "Техника",
-        "Красота",
-        "Дом и ремонт",
-        "Развлечения",
-        "Спорт",
-        "Транспорт",
-        "Книги",
-        "Путешествия"
+        "Еда", "Одежда", "Техника", "Красота", "Дом и ремонт",
+        "Развлечения", "Спорт", "Транспорт", "Книги", "Путешествия"
     )
 
-    LaunchedEffect(Unit) {
-        val savedCategories = CategoryDataStore.loadCategories(context)
-        selectedCategories.clear()
-        if (savedCategories.isEmpty()) {
-            selectedCategories.addAll(availableCategories)
-        } else {
-            selectedCategories.addAll(savedCategories)
+    val wasLoaded = remember { mutableStateOf(false) }
+
+    if (!wasLoaded.value) {
+        LaunchedEffect(Unit) {
+            val savedCategories = CategoryDataStore.loadCategories(context)
+            selectedCategories.clear()
+            if (savedCategories.isEmpty()) {
+                selectedCategories.addAll(availableCategories)
+            } else {
+                selectedCategories.addAll(savedCategories)
+            }
+            wasLoaded.value = true
         }
     }
 
-
-
-
-    LaunchedEffect(Unit) {
-        val savedCategories = CategoryDataStore.loadCategories(context)
-        selectedCategories.clear()
-        selectedCategories.addAll(savedCategories)
-    }
 
     BackHandler {
         coroutineScope.launch {
@@ -70,6 +56,7 @@ fun CategorySelectionScreen(
             navController.popBackStack()
         }
     }
+
     Scaffold(
         topBar = {
             Surface(
@@ -93,8 +80,6 @@ fun CategorySelectionScreen(
                             contentDescription = "Назад"
                         )
                     }
-
-                    // Заголовок
                     Text(
                         "Выбор категорий",
                         fontWeight = FontWeight(700),
@@ -105,7 +90,12 @@ fun CategorySelectionScreen(
             }
         },
         bottomBar = {
-            Column(modifier = Modifier.padding(bottom = 100.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 115.dp),
+                contentAlignment = Alignment.Center
+            ) {
                 Button(
                     onClick = {
                         coroutineScope.launch {
@@ -115,13 +105,20 @@ fun CategorySelectionScreen(
                         }
                     },
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .height(60.dp),
+                        .width(380.dp)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color( 0xFF7AC87A),
-                        contentColor = Color.White
-                    )
+                        containerColor = Color(0xFF7AC87A),
+                        disabledContainerColor = Color.Gray,
+                        contentColor = Color.White,
+                        disabledContentColor = Color.White
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 32.dp,
+                        pressedElevation = 16.dp,
+                        disabledElevation = 0.dp
+                    ),
                 ) {
                     Text(
                         "Сохранить выбор",
@@ -132,46 +129,54 @@ fun CategorySelectionScreen(
             }
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier
-            .padding(padding)
-            .fillMaxSize()
-            .padding(top = 16.dp)
-            .padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(bottom = 88.dp)
-        ){
-            items(availableCategories) { category ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
+            Spacer(modifier = Modifier.height(8.dp))
+            availableCategories.forEach { category ->
                 val isSelected = category in selectedCategories
-                Row(
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(50.dp)
+                        .shadow(2.dp, RoundedCornerShape(12.dp))
                         .clickable {
                             if (isSelected) {
                                 selectedCategories.remove(category)
                             } else {
                                 selectedCategories.add(category)
                             }
-                        }
-                        .padding(vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        },
+                    color = Color.White,
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    Checkbox(
-                        checked = isSelected,
-                        onCheckedChange = null,
-                        colors = CheckboxDefaults.colors(
-                            checkedColor =  Color( 0xFF7AC87A),
-                            uncheckedColor = Color( 0xFF7AC87A),
-                            checkmarkColor = Color.White
-                    )
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(category,
-                        fontSize = 18.sp,
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                    )
+                            .padding(vertical = 6.dp, horizontal = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = isSelected,
+                            onCheckedChange = null,
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = Color(0xFF7AC87A),
+                                uncheckedColor = Color(0xFF7AC87A),
+                                checkmarkColor = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = category,
+                            fontSize = 18.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
 }
-
