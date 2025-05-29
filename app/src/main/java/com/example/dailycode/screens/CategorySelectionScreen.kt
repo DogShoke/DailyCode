@@ -93,7 +93,7 @@ fun CategorySelectionScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 115.dp),
+                    .padding(bottom = 100.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Button(
@@ -115,8 +115,8 @@ fun CategorySelectionScreen(
                         disabledContentColor = Color.White
                     ),
                     elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 32.dp,
-                        pressedElevation = 16.dp,
+                        defaultElevation = 16.dp,
+                        pressedElevation = 8.dp,
                         disabledElevation = 0.dp
                     ),
                 ) {

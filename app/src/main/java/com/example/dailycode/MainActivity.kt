@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        scheduleDailyNotification(15, 24, "morning")
+        scheduleDailyNotification(10, 0, "morning")
         scheduleDailyNotification(19, 0, "evening")
     }
 }
